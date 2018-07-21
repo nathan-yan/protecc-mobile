@@ -33,3 +33,12 @@ exports.joinParty = function(roomCode) {
     })
   })
 }
+
+exports.createParty = function() {
+  return fetch(BASE_URL + "/party/create", {
+    method: "POST",
+    headers: {
+      Accept: "application/json"
+    }
+  })
+}

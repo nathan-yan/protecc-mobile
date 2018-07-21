@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, TextInput, KeyboardAvoidingView, Animated, Keyboard } from 'react-native'
+import { View, StyleSheet, Image, Text, TextInput, KeyboardAvoidingView, Animated, Keyboard, Alert } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 
 import { Button } from '../Component'
+
+import api from '../Api'
 
 export default class Login extends Component {
   constructor (props) {
     super(props)
 
+    const { navigate } = this.props.navigation;
+    this.navigate = navigate; 
+
     this.state = {
       marginTop: new Animated.Value(heightPercentageToDP(18))
+    }
+  }
+
+  createParty = async () => {
+    let res = await api.createParty();
+    console.log(res);
+    if (res.status === 401) {    // User is not logged in
+      this.navigate("Login");
+    }else if (res.status === 409){   // User is already in party
+      Alert.alert("You are already in a party!");
+    }else if (res.status === 200){
+      this.navigate("Dashboard");
     }
   }
   
@@ -52,11 +69,13 @@ export default class Login extends Component {
 
             />
             <Text style = {{color: "white", fontSize: 25, fontFamily: "sofia pro regular"}}>or</Text>
-            <Button text="scan code" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(-3)}}/>
+            <Button text="scan code" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(-3)}} onPress = {() => {
+              this.navigate('JoinPartyScanCode')
+            }}/>
           </Animated.View>
 
-          <Text style={{color: '#FFFFFF', fontSize: 25, fontFamily: 'sofia pro regular', marginTop: heightPercentageToDP(10)}} onPress = {() => {
-            this.props.navigation('CreateParty')
+          <Text style={{color: '#FFFFFF', fontSize: 25, fontFamily: 'sofia pro regular', marginTop: heightPercentageToDP(10)}} onPress = {() => {console.log("HELLO!");
+            this.createParty()
           }}> 
             create a party
           </Text>
