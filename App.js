@@ -11,6 +11,8 @@ import { createStackNavigator } from 'react-navigation';
 
 import LoginScreen from './src/Login/Login'
 import SplashScreen from './src/Splash/Splash'
+import SignUpScreen from './src/Login/SignUp'
+
 export default class App extends Component {
   render() {
     return <RootStack/>
@@ -20,6 +22,7 @@ export default class App extends Component {
 const RootStack = createStackNavigator({
   Splash: SplashScreen,
   Login: LoginScreen,
+  SignUp: SignUpScreen
 },
 {
   initialRouteName: 'Login',

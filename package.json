@@ -18,14 +18,13 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "@mapbox/react-native-mapbox-gl": "^6.1.2-beta2",
     "fetch": "^1.1.0",
+    "qr-image": "^3.2.0",
     "react": "16.3.1",
     "react-native": "^0.55.0",
     "react-native-svg": "^6.4.1",
     "react-navigation": "^2.7.0",
-    "@mapbox/react-native-mapbox-gl": "^6.1.2-beta2",
-    "socket.io-client": "^2.1.1",
-    "qr-image": "^3.2.0",
-    "qrcode-reader": "^1.0.4"
+    "socket.io-client": "^2.1.1"
   }
 }
