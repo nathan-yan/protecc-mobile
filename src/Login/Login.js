@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
+import Api from '../Api'
 
 export default class Login extends Component {
   constructor(props) {
@@ -10,6 +11,14 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: ''
+    }
+  }
+
+  onPressLogin = () => {
+    if (this.state.email !== '' && this.state.password !== '') {
+      Api.login(this.state.email, this.state.password).then((res => {
+
+      }))
     }
   }
 
@@ -22,10 +31,10 @@ export default class Login extends Component {
     return (
       <View style={{flex: 1, backgroundColor: '#527AFF'}}>
         <View style={{position:'absolute', marginLeft: widthPercentageToDP(16), marginTop: heightPercentageToDP(13)}}>
-          <Text style={{color: '#FFFFFF', fontSize: 30, fontFamily: 'sofia pro regular'}}> 
+          <Text style={{color: '#FFFFFF', fontSize: 40, fontFamily: 'sofia pro regular'}}> 
             login
           </Text>
-          <TextInput style={{marginTop: heightPercentageToDP(18), fontSize: 32, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
+          <TextInput style={{paddingLeft: 0, marginTop: heightPercentageToDP(18), fontSize: 32, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
             underlineColorAndroid={'transparent'}
             placeholder="email"
             placeholderTextColor="#DDDDDD"
@@ -33,7 +42,7 @@ export default class Login extends Component {
             onChangeText={(email) => this.setState({email})}
             autoCapitalize='none'
           />
-          <TextInput style={{fontSize: 30, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
+          <TextInput style={{paddingLeft: 0, fontSize: 30, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
             underlineColorAndroid={'transparent'}
             placeholder="password"
             placeholderTextColor="#DDDDDD"
@@ -42,7 +51,7 @@ export default class Login extends Component {
             secureTextEntry={true}
             autoCapitalize='none'
           />
-          <Button text="login" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(6)}}/>
+          <Button text="login" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(6)}} onPress={this.onPressLogin}/>
           <View style={{flexDirection: 'row', marginTop: heightPercentageToDP(3)}}>
             <TouchableOpacity>
               <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular', fontSize: 20}}>
