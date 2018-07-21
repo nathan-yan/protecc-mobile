@@ -13,6 +13,7 @@ import LoginScreen from './src/Login/Login'
 import SplashScreen from './src/Splash/Splash'
 import JoinPartyScreen from './src/JoinParty/JoinParty'
 import ScanCodeScreen from './scr/JoinParty/ScanCode'
+import SignUpScreen from './src/Login/SignUp'
 
 export default class App extends Component {
   render() {
@@ -24,7 +25,8 @@ const RootStack = createStackNavigator({
   Splash: SplashScreen,
   Login: LoginScreen,
   JoinParty: JoinPartyScreen,
-  JoinPartyScanCode: ScanCodeScreen
+  JoinPartyScanCode: ScanCodeScreen,
+  SignUp: SignUpScreen
 },
 {
   initialRouteName: 'JoinParty',
