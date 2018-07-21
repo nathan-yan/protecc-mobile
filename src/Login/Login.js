@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, TextInput } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
-
-//TODO: Add sofia pro FOR TEXT
+import { Button } from '../Component'
 
 export default class Login extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ export default class Login extends Component {
           <Text style={{color: '#FFFFFF', fontSize: 30, fontFamily: 'sofia pro regular'}}> 
             login
           </Text>
-          <TextInput style={{marginTop: heightPercentageToDP(18), fontSize: 32, color: "#DDDDDD", width: widthPercentageToDP(70)}}
+          <TextInput style={{marginTop: heightPercentageToDP(18), fontSize: 32, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
             underlineColorAndroid={'transparent'}
             placeholder="email"
             placeholderTextColor="#DDDDDD"
@@ -34,7 +33,7 @@ export default class Login extends Component {
             onChangeText={(email) => this.setState({email})}
             autoCapitalize='none'
           />
-          <TextInput style={{marginTop: heightPercentageToDP(3), fontSize: 32, color: "#DDDDDD", width: widthPercentageToDP(70)}}
+          <TextInput style={{fontSize: 30, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
             underlineColorAndroid={'transparent'}
             placeholder="password"
             placeholderTextColor="#DDDDDD"
@@ -43,9 +42,10 @@ export default class Login extends Component {
             secureTextEntry={true}
             autoCapitalize='none'
           />
+          <Button text="login" style={{width: widthPercentageToDP(40), height: heightPercentageToDP(4), marginTop: heightPercentageToDP(6)}}/>
         </View>
         <Image source={require(imagePath)} style={{position:'absolute', width: imageWidth, height: imageHeight, alignSelf: 'flex-end', marginTop: 10}}/>
-
+      
       </View>
     )
   }
