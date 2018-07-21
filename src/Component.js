@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TouchableOpacity, Text, View, ActivityIndicator } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from './scaling'
 
+import QRCodeScanner from 'react-native-qrcode-scanner'
 class Button extends Component {
   render() {
     return(
@@ -20,6 +21,18 @@ class Button extends Component {
   }
 }
 
+export default class QRScanner extends Component {
+  render() {
+    return (
+      <View style={{flex: 1, backgroundColor: '#527AFF'}}>
+      <QRCodeScanner
+      onRead={this.props.onReadCallback}  topViewStyle = {{height: 0}} bottomViewStyle = {{height: 0}} containerStyle = {{padding:0, margin: 0, height: "100%"}}cameraStyle = {{height: "100%"}}/>    
+      </View>
+    )
+  }
+}
+
 export {
-  Button
+  Button,
+  QRScanner
 }
