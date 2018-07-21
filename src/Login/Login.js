@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, TextInput } from 'react-native'
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 
@@ -43,6 +43,19 @@ export default class Login extends Component {
             autoCapitalize='none'
           />
           <Button text="login" style={{width: widthPercentageToDP(40), height: heightPercentageToDP(4), marginTop: heightPercentageToDP(6)}}/>
+          <View style={{flexDirection: 'column'}}>
+            <TouchableOpacity>
+              <Text>
+                sign up
+              </Text>
+            </TouchableOpacity>
+            <Text>
+              {'\u00b7'}
+            </Text>
+            <TouchableOpacity>
+
+            </TouchableOpacity>
+          </View>
         </View>
         <Image source={require(imagePath)} style={{position:'absolute', width: imageWidth, height: imageHeight, alignSelf: 'flex-end', marginTop: 10}}/>
       
