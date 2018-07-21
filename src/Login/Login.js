@@ -16,15 +16,15 @@ export default class Login extends Component {
 
   render() {
     const imagePath = '../../assets/images/chicken.png'
-    const imageRatio = 0.40
+    const imageRatio = 40 //in percentage
     const imageWidth = widthPercentageToDP(imageRatio)
-    const imageHeight = imageWidth * 564.0 / 307.0
+    const imageHeight = Math.round(imageWidth * 564.0 / 307.0)
 
     return (
       <View style={{flex: 1, backgroundColor: '#527AFF'}}>
         <View style={{position:'absolute', marginLeft: widthPercentageToDP(16), marginTop: heightPercentageToDP(13)}}>
           <Text style={{color: '#FFFFFF', fontSize: 30, fontFamily: 'sofia pro regular'}}> 
-            {imageWidth}'\n'{imageHeight}
+            login
           </Text>
           <TextInput style={{marginTop: heightPercentageToDP(18), fontSize: 32, color: "#DDDDDD", width: widthPercentageToDP(70)}}
             underlineColorAndroid={'transparent'}
@@ -44,7 +44,7 @@ export default class Login extends Component {
             autoCapitalize='none'
           />
         </View>
-        <Image source={require(imagePath)} style={{position:'absolute', width: 1.333, height: 2.45, alignSelf: 'flex-end', marginTop: 10}}/>
+        <Image source={require(imagePath)} style={{position:'absolute', width: imageWidth, height: imageHeight, alignSelf: 'flex-end', marginTop: 10}}/>
 
       </View>
     )
