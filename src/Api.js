@@ -21,3 +21,15 @@ exports.reauthenticate = function(){
   });
 }
 
+exports.joinParty = function(roomCode) {
+  return fetch(BASE_URL + "/party/join", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify({
+      roomCode: roomCode
+    })
+  })
+}
