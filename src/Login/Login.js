@@ -42,18 +42,20 @@ export default class Login extends Component {
             secureTextEntry={true}
             autoCapitalize='none'
           />
-          <Button text="login" style={{width: widthPercentageToDP(40), height: heightPercentageToDP(4), marginTop: heightPercentageToDP(6)}}/>
-          <View style={{flexDirection: 'column'}}>
+          <Button text="login" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(6)}}/>
+          <View style={{flexDirection: 'row', marginTop: heightPercentageToDP(3)}}>
             <TouchableOpacity>
-              <Text>
+              <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular', fontSize: 20}}>
                 sign up
               </Text>
             </TouchableOpacity>
-            <Text>
-              {'\u00b7'}
+            <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular', fontSize: 20}}>
+              {' \u00b7 '}
             </Text>
             <TouchableOpacity>
-
+              <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular', fontSize: 20}}>
+                use google
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

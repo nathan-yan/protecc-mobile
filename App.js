@@ -22,7 +22,7 @@ const RootStack = createStackNavigator({
   Login: LoginScreen,
 },
 {
-  initialRouteName: 'Splash',
+  initialRouteName: 'Login',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
