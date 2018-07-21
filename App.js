@@ -8,8 +8,9 @@
 
 import React, {Component} from 'react';
 import { createStackNavigator } from 'react-navigation';
-import LoginScreen from './src/Login/Login'
 
+import LoginScreen from './src/Login/Login'
+import SplashScreen from './src/Splash/Splash'
 export default class App extends Component {
   render() {
     return <RootStack/>
@@ -17,10 +18,11 @@ export default class App extends Component {
 }
 
 const RootStack = createStackNavigator({
+  Splash: SplashScreen,
   Login: LoginScreen,
 },
 {
-  initialRouteName: 'Login',
+  initialRouteName: 'Splash',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
