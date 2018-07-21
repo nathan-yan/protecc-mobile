@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 import Api from '../Api'
@@ -11,23 +11,23 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      progressShowing: false
+      showIndicator: false
     }
   }
 
   onPressLogin = () => {
     if (this.state.email !== '' && this.state.password !== '') {
       this.setState({
-        progressShowing: true
+        showIndicator: true
       })
-      Api.login(this.state.email, this.state.password).then((res => {
-        this.setState({
-          progressShowing: false
-        })
-        if (res.status === 200) {
-          this.props.navigation.navigate('JoinParty')
-        }
-      }))
+      // Api.login(this.state.email, this.state.password).then((res => {
+      //   this.setState({
+      //     showIndicator: false
+      //   })
+      //   if (res.status === 200) {
+      //     this.props.navigation.navigate('JoinParty')
+      //   }
+      // }))
     }
   }
 
@@ -60,10 +60,7 @@ export default class Login extends Component {
             secureTextEntry={true}
             autoCapitalize='none'
           />
-          <View style={{flexDirection: 'row'}}>
-            <Button text="login" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(6)}} onPress={this.onPressLogin}/>
-            <ActivityIndicator size="small" color="#527AFF"/>
-          </View>
+          <Button text="login" style={{width: widthPercentageToDP(40)}} onPress={this.onPressLogin} showIndicator={this.state.showIndicator}/>
           <View style={{flexDirection: 'row', marginTop: heightPercentageToDP(3)}}>
             <TouchableOpacity>
               <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular', fontSize: 20}}>
