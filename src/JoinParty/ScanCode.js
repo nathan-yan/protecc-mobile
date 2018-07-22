@@ -17,8 +17,9 @@ export default class ScanCode extends Component {
 
     let data = qr.data; 
 
-    let res = await api.joinParty(qr);
-
+    console.log(data);
+    let res = await api.joinParty(data);
+    
     if (res.status === 401){    // User is not logged in
       navigate("Login");
     }else if (res.status === 403){    // Party is closed
@@ -28,7 +29,7 @@ export default class ScanCode extends Component {
     }else if (res.status === 409) {   // User is already in party
       Alert.alert("You're already in a party!")
     }else if (res.status === 200) {
-      navigate("Dashboard");
+      navigate("Main");
     }
   }
   
