@@ -29,7 +29,7 @@ export default class MainDashboard extends Component {
     let guardians = getPartyState().guardians
     
     for (var i = 0; i < guardians.length; i++){
-      if (guardians[i]._id == getUserState._id){
+      if (guardians[i]._id.toString() == getUserState()._id.toString()){
         this.isAdmin = true
       } 
     }
