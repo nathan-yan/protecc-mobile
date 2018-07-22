@@ -26,6 +26,15 @@ export default class App extends Component {
     this.state = {
       initialized: false
     }
+
+    exports.setPartyStateDirectly = async (data) => {
+      this.setState(data);
+    }
+
+    exports.getPartyState = () => {
+      return this.state.partyData;
+    }
+  
   }
 
   componentWillMount = async () => {  
@@ -38,6 +47,8 @@ export default class App extends Component {
     let res = await Api.reauthenticate();
     
     exports.splashReauthenticateStatus = res.status;
+
+    console.log(res)
 
     if (res.status === 401){    // No account associated with session
       initialRoute = 'Login'
@@ -72,13 +83,27 @@ export default class App extends Component {
         initialized: true,
         partyData: json
       })
+    } else {
+      this.setState({
+        initialized: true
+      })
     }
     
   }
 
+  setPartyState = async () => {
+    let res = await Api.getParty()
+    let json = await res.json()
+    if (res.status === 200) {
+      this.setState({
+        partyData: json,
+      })
+    }
+  }
+
   render() {
     console.log(this.state.partyData);
-    return  this.state.initialized ? <this.RootStack screenProps = {this.state.partyData}/> : <SplashScreen /> 
+    return  this.state.initialized ? <this.RootStack screenProps = {{setPartyState: this.setPartyState, partyData: this.state.partyData}}/> : <SplashScreen /> 
   }
 }
 class Splash_ extends Component {

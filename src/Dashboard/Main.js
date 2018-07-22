@@ -62,6 +62,7 @@ export default class MainDashboard extends Component {
     navigator.geolocation.watchPosition(async (res) => {
       let longitude = res.coords.longitude;
       let latitude = res.coords.latitude;
+      Alert.alert("UPDATED LOCATION!");
 
       console.log(res)
 
@@ -109,11 +110,12 @@ export default class MainDashboard extends Component {
   render() {
     Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
     console.log(this.props.screenProps);
-    let partyData = this.props.screenProps;
+    let partyData = this.props.screenProps.partyData;
     let annotations = partyData.members.map((member, i) => {
       // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
 
       console.log(member.location, member.name)
+      if (!member.location) return;
       return <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = {"member-" + i} coordinate = {[member.location.lon, member.location.lat]} key = {"member-" + i}>
       <View style = {{justifyContent: "center"}}>
         <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>

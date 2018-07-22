@@ -64,18 +64,19 @@ export default class Login extends Component {
     ]).start()
   }
 
-  onPressLogin = () => {
+  onPressLogin = async () => {
     if (this.state.email !== '' && this.state.password !== '') {
       this.setState({
         showIndicator: true
       })
-      Api.login(this.state.email, this.state.password).then((res => {
+      Api.login(this.state.email, this.state.password).then((async (res) => {
         this.setState({
           showIndicator: false
         })
         if (res.status === 200) {
           this.props.navigation.navigate('JoinParty')
         }else if (res.status === 201){
+          await this.props.screenProps.setPartyState()
           this.props.navigation.navigate('Main');
         }
       }))

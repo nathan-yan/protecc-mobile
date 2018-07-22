@@ -27,6 +27,7 @@ export default class Login extends Component {
     }else if (res.status === 409){   // User is already in party
       Alert.alert("You are already in a party!");
     }else if (res.status === 200){
+      await this.props.screenProps.setPartyState()
       this.navigate("Main");
     }
   }
