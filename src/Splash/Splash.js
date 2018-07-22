@@ -8,6 +8,7 @@ import { partyDataContext, splashReauthenticateStatus } from "../../App"
 
 export default class Splash extends Component {
   async componentDidMount() {
+    /*
     const { navigate } = this.props.navigation;
 
     var checker = setInterval(() => {
@@ -28,7 +29,7 @@ export default class Splash extends Component {
         clearInterval(checker);
       }
     }
-    }, 100)
+    }, 100)*/
 
   }
 

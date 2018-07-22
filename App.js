@@ -26,40 +26,67 @@ import MainScreen from './src/Dashboard/Main'
 
 import Api from './src/Api'
 
+import Socket from './src/Socket'
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      partyData: {}
+      initialized: false
     }
-
-    
   }
 
-  initialize = async () => {  
+  componentWillMount = async () => {  
     // Check if user is in a group
     // If user isn't in a group, go to login page
     // Otherwise, go to dashboard
+
+    let initialRoute;
 
     let res = await Api.reauthenticate();
     
     exports.splashReauthenticateStatus = res.status;
 
     if (res.status === 401){    // No account associated with session
+      initialRoute = 'Login'
     }else if (res.status === 201){  // Logged in and has a party
       let res = await Api.getParty();
-      let json = await res.json();
+      var json = await res.json();
 
-      exports.partyDataContext = json;
+      initialRoute = 'Main'
 
     }else if (res.status === 200) {   // Logged in and does not have a party
+      initialRoute = 'JoinParty'
     }
+
+    this.RootStack = createStackNavigator({
+      Splash: SplashScreen,
+      Login: LoginScreen,
+      JoinParty: JoinPartyScreen,
+      JoinPartyScanCode: ScanCodeScreen,
+      SignUp: SignUpScreen,
+      Main: MainScreen
+    },
+    {
+      initialRouteName: initialRoute,
+      headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    })
+
+    if (res.status === 201){
+      this.setState({
+        initialized: true,
+        partyData: json
+      })
+    }
+    
   }
 
   render() {
-    this.initialize() 
-    return <RootStack/>
+    console.log(this.state.partyData);
+    return  this.state.initialized ? <this.RootStack screenProps = {this.state.partyData}/> : <SplashScreen /> 
   }
 }
 class Splash_ extends Component {
@@ -67,19 +94,3 @@ class Splash_ extends Component {
     return <SplashScreen />
   }
 }
-
-const RootStack = createStackNavigator({
-  Splash: SplashScreen,
-  Login: LoginScreen,
-  JoinParty: JoinPartyScreen,
-  JoinPartyScanCode: ScanCodeScreen,
-  SignUp: SignUpScreen,
-  Main: MainScreen
-},
-{
-  initialRouteName: 'Splash',
-  headerMode: 'none',
-    navigationOptions: {
-        headerVisible: false,
-    }
-})
