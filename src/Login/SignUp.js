@@ -17,7 +17,7 @@ export default class SignUp extends Component {
       email: '',
       phone: '',
       password: '',
-      avatarSource: '',
+      avatarSource: {uri: ''},
       showIndicator: false,
       keyboardHeight: new Animated.Value(0),
       password_mask: true,
@@ -90,7 +90,7 @@ export default class SignUp extends Component {
 
   render() {
     let image
-    if (this.state.avatarSource) {
+    if (this.state.avatarSource.uri !== '') {
       image = <Image source={this.state.avatarSource} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
     } else {
       image = <Image source={require('../../assets/images/default.png')} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
