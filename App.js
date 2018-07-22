@@ -15,6 +15,8 @@ import JoinPartyScreen from './src/JoinParty/JoinParty'
 import ScanCodeScreen from './src/JoinParty/ScanCode'
 import SignUpScreen from './src/Login/SignUp'
 
+import MainScreen from './src/Dashboard/Main'
+
 export default class App extends Component {
   render() {
     return <RootStack/>
@@ -26,10 +28,12 @@ const RootStack = createStackNavigator({
   Login: LoginScreen,
   JoinParty: JoinPartyScreen,
   JoinPartyScanCode: ScanCodeScreen,
-  SignUp: SignUpScreen
+  SignUp: SignUpScreen,
+
+  Main: MainScreen
 },
 {
-  initialRouteName: 'JoinParty',
+  initialRouteName: 'Main',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
