@@ -402,15 +402,18 @@ export default class MainDashboard extends Component {
       </TouchableWithoutFeedback>
         }
 
+        
+        { this.state.showingSummary && 
+          <View style = {{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+            <Summary far = {this.headcount.far} near = {this.headcount.near} center = {[this.state.coordinates.initLongitude || 0, this.state.coordinates.initLatitude || 0]}></Summary>
+          </View>
+        }
+        
+
+
 
               </View>
     )
   }
 }
 
-/*
-{this.state.showingSummary && <View style = {{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
-        <Summary far = {this.headcount.far} near = {this.headcount.near} center = {[this.state.coordinates.initLongitude || 0, this.state.coordinates.initLatitude || 0]}></Summary>
-      </View>}
-        
-*/
