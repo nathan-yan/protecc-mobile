@@ -1,17 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import { createStackNavigator } from 'react-navigation';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 
 Mapbox.setAccessToken('pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ');
-exports.Mapbox = Mapbox;
 
 exports.partyDataContext;
 exports.splashReauthenticateStatus;
@@ -23,6 +14,7 @@ import ScanCodeScreen from './src/JoinParty/ScanCode'
 import SignUpScreen from './src/Login/SignUp'
 
 import MainScreen from './src/Dashboard/Main'
+import PeopleScreen from './src/Dashboard/PeopleScreen'
 
 import Api from './src/Api'
 

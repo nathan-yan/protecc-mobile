@@ -14,7 +14,8 @@ export default class Login extends Component {
     this.navigate = navigate; 
 
     this.state = {
-      marginTop: new Animated.Value(heightPercentageToDP(18))
+      marginTop: new Animated.Value(heightPercentageToDP(18)),
+      joinPartyInput: ''
     }
   }
 
@@ -51,6 +52,20 @@ export default class Login extends Component {
     }).start()
   }
 
+  onButtonPress = () => {
+    if (this.state.joinPartyInput.length < 6) {
+      this.navigate('JoinPartyScanCode')
+    } else {
+      api.joinParty(this.state.joinPartyInput).then((res) => {
+        if (res.status === 200) {
+          this.navigate('People')
+        } else {
+          Alert.alert('Party does not exist!')
+        }
+      })
+    }
+  }
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: '#527AFF'}}>
@@ -64,14 +79,13 @@ export default class Login extends Component {
               underlineColorAndroid={'transparent'}
               placeholder="party code"
               placeholderTextColor="#DDDDDD"
-
+              maxLength={6}
               autoCapitalize='none'
-
+              value={this.state.joinPartyInput}
+              onChangeText={(joinPartyInput) => this.setState({joinPartyInput})}
             />
-            <Text style = {{color: "white", fontSize: 25, fontFamily: "sofia pro regular"}}>or</Text>
-            <Button text="scan code" style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(-3)}} onPress = {() => {
-              this.navigate('JoinPartyScanCode')
-            }}/>
+            <Text style = {{color: "white", fontSize: 25, fontFamily: "sofia pro regular", opacity: this.state.joinPartyInput.length===6 ? 0 : 1}}>or</Text>
+            <Button text={this.state.joinPartyInput.length===6 ? "join code" : "scan code"} style={{width: widthPercentageToDP(40), marginTop: heightPercentageToDP(-3)}} onPress = {this.onButtonPress}/>
           </Animated.View>
 
           <Text style={{color: '#FFFFFF', fontSize: 25, fontFamily: 'sofia pro regular', marginTop: heightPercentageToDP(10)}} onPress = {() => {console.log("HELLO!");
