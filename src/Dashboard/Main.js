@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Animated, Image, Text, TextInput, TouchableOpacity, TouchableHighlight,TouchableWithoutFeedback, Alert } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
-import { Button } from '../Component'
+import { Button, Button2 } from '../Component'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Cookie from 'react-native-cookies';
@@ -9,6 +9,7 @@ import Cookie from 'react-native-cookies';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 import Api from '../Api'
 import Menu from './Menu'
+import { setPartyStateDirectly, getPartyState, getUserState } from '../../App'
 
 Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
 
@@ -30,7 +31,8 @@ export default class MainDashboard extends Component {
       headcountStatus: {
         near: [], 
         responses: [],
-        nearBar: new Animated.Value(0)
+        nearBar: new Animated.Value(0),
+        farBar: new Animated.Value(0),
       }
     }
 
@@ -40,6 +42,12 @@ export default class MainDashboard extends Component {
       let headcountStatus = this.state.headcountStatus;
       headcountStatus[type].push(response);
       
+      let totalMembers = this.props.screenProps.partyData.members.length;
+      Animated.timing(this.state.headcountStatus.farBar, {
+        toValue: widthPercentageToDP(100 / totalMembers * (headcountStatus.responses.length + headcountStatus.near.length)) * 0.6,
+        duration: 300
+      }).start()
+
       this.setState({
         headcountStatus: headcountStatus
       })
@@ -58,6 +66,15 @@ export default class MainDashboard extends Component {
       this.setState({
         headcountStatus: headcountStatus
       })
+    }
+
+    this.isAdmin = false;
+    let guardians = getPartyState().guardians
+    
+    for (var i = 0; i < guardians.length; i++){
+      if (guardians[i]._id == getUserState()._id){
+        this.isAdmin = true
+      } 
     }
 
   }
@@ -188,6 +205,10 @@ export default class MainDashboard extends Component {
     
   }
 
+  submitResponse = () => {
+    Api.respondHeadcount() 
+  }
+
   render() {
     let partyData = this.props.screenProps.partyData;
 
@@ -217,7 +238,7 @@ export default class MainDashboard extends Component {
           <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
-        { this.state.headcount && 
+        { this.state.headcount && this.isAdmin &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
           <TouchableWithoutFeedback>
@@ -252,6 +273,39 @@ export default class MainDashboard extends Component {
                 </View>
               </TouchableHighlight>
             </View>
+          </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+        }
+
+        { true &&
+          <TouchableWithoutFeedback onPress={this.handleOuterPress}>
+        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
+          <TouchableWithoutFeedback>
+          <View style={{width: widthPercentageToDP(80), height: heightPercentageToDP(45), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center', elevation: 5}}>
+            <Text style={{color: '#000000', fontSize: 22, fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 0}}>
+              doing a head count...
+            </Text>
+            <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems:"center", width: widthPercentageToDP(60), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
+              <Button2 text = "i'm ok!" onPress = {() => {
+                Api.respondHeadcount()
+              }}></Button2>
+              
+            </View>
+            <View style = {{padding: 10}}>
+              <Text style={{color: '#000000', fontSize: 17, textAlign: "center", fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 15}}>
+                let your guardian know you're responsive, even if you're not with your group!
+              </Text>
+            </View>
+            <View
+              styleURL={Mapbox.StyleURL.Light}
+              zoomLevel={15}
+              centerCoordinate={[3, 3]}
+              style={{width: "100%", flex: 1, marginTop: -1 * widthPercentageToDP(23)/2, zIndex: 0}}
+            >
+            </View>
+           
           </View>
           </TouchableWithoutFeedback>
         </View>
