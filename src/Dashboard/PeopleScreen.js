@@ -36,11 +36,6 @@ export default class PeopleScreen extends Component {
       popUpMember: undefined
     }
   }
-  componentDidMount() {
-    api.getParty().then((res) => {
-      console.log(res.data)
-    })
-  }
 
   onPersonPress = (member) => {
     this.setState({
@@ -97,9 +92,9 @@ class PopUp extends Component {
   render() {
     return(
       <TouchableWithoutFeedback onPress={this.handleOuterPress}>
-        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0005", width: '100%', height: '100%'}}>
+        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
           <TouchableWithoutFeedback>
-          <View style={{width: widthPercentageToDP(70), height: heightPercentageToDP(55), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center'}}>
+          <View style={{width: widthPercentageToDP(70), height: heightPercentageToDP(55), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center', elevation: 5}}>
             <Text style={{color: '#000000', fontSize: 22, fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 15}}>
               {this.props.popUpMember.name}
             </Text>
@@ -116,14 +111,14 @@ class PopUp extends Component {
             <View style={{flexDirection: 'row', height: heightPercentageToDP(5), width: '100%'}}>
               <TouchableHighlight style={{flex: 1}}>
                 <View style={{flex: 1, backgroundColor: '#527AFF', borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
-                  <Text>
+                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
                     promote
                   </Text>
                 </View>
               </TouchableHighlight>
               <TouchableHighlight style={{flex: 1}}>
                 <View style={{flex: 1, backgroundColor: '#F05056', borderBottomRightRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
-                  <Text>
+                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
                     kick out
                   </Text>
                 </View>

@@ -8,13 +8,7 @@ import Cookie from 'react-native-cookies';
 
 console.log(Cookie.get("https://api.protecc.us"));
 
-<<<<<<< HEAD
 import Mapbox from '@mapbox/react-native-mapbox-gl';
-=======
-import { Mapbox } from "../../App";
-import { partyDataContext } from "../../App"
-
->>>>>>> 0157780faf5b161e9d1c2cb1943b5da7d9579c4d
 import Api from '../Api'
 import Menu from './Menu'
 
