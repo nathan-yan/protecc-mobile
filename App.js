@@ -15,6 +15,7 @@ import SignUpScreen from './src/Login/SignUp'
 
 import MainScreen from './src/Dashboard/Main'
 import PeopleScreen from './src/Dashboard/PeopleScreen'
+import ChatScreen from './src/Chat/Chat'
 
 import Api from './src/Api'
 
@@ -88,6 +89,7 @@ export default class App extends Component {
       SignUp: SignUpScreen,
       Main: MainScreen, 
       People: PeopleScreen,
+      Chat: ChatScreen
     },
     {
       initialRouteName: initialRoute,
