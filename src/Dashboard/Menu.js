@@ -114,21 +114,21 @@ export default class MainDashboard extends Component {
     <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
       this.props.hideMenuCallback(); this.navigate("Main");
     }}>
-      <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>map</Text>
+      <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "map" ? '#527AFF' : "black"}}>map</Text>
     </TouchableOpacity>
 
   <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
     this.props.hideMenuCallback(); this.navigate("People");
   }}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>people</Text>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "people" ? '#527AFF' : "black"}}>people</Text>
   </TouchableOpacity>
 
   <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>chat</Text>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "chat" ? '#527AFF' : "black"}}>chat</Text>
   </TouchableOpacity>
 
   <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>settings</Text>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "settings" ? '#527AFF' : "black"}}>settings</Text>
   </TouchableOpacity>
 
     </View>

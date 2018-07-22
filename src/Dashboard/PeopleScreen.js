@@ -120,7 +120,7 @@ export default class PeopleScreen extends Component {
         }
         { this.state.showingMenu && 
          
-         <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
+         <Menu currentScreen="people" hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
        }
       </View>
     )

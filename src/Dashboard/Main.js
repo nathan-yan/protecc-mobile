@@ -269,7 +269,7 @@ export default class MainDashboard extends Component {
            </Mapbox.MapView>
         { this.state.showingMenu && 
          
-          <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
+          <Menu currentScreen="map" hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
         { this.state.headcount && this.isAdmin && this.state.initiator &&
