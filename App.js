@@ -82,8 +82,8 @@ export default class App extends Component {
       JoinParty: JoinPartyScreen,
       JoinPartyScanCode: ScanCodeScreen,
       SignUp: SignUpScreen,
-      Main: MainScreen,
-      People: PeopleScreen
+      Main: MainScreen, 
+      People: PeopleScreen,
     },
     {
       initialRouteName: initialRoute,

@@ -8,10 +8,6 @@ BASE_URL = "https://api.protecc.us"
 const socket = io(BASE_URL);
 
 socket.on('locationUpdate', (data) => {
-  console.log('\n\n\n')
-  console.log(getPartyState());
-  console.log("DATA ^^^^");
-  console.log('\n\n\n')
 
   let partyData = getPartyState();
 
