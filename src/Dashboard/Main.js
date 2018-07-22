@@ -39,6 +39,13 @@ export default class MainDashboard extends Component {
 
     this.mapRef; 
 
+    if (this.props.screenProps.partyData.headcount.near == [] && this.props.screenProps.partyData.headcount.far == [] && this.props.screenProps.partyData.headcount.unresponsive == []){
+      this.setState({
+        showingMenu: false,
+        headcount: true
+      })
+    }
+
     exports.headcountResponse = (type, response) => {
       let headcountStatus = this.state.headcountStatus;
       headcountStatus[type].push(response);
@@ -308,7 +315,7 @@ export default class MainDashboard extends Component {
             </Text>
             <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems:"center", width: widthPercentageToDP(60), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
               <Button2 text = "i'm ok!" onPress = {() => {
-                Api.respondHeadcount()
+                Api.respondHeadcount(); this.setState({headcount: false})
               }}></Button2>
               
             </View>
