@@ -5,6 +5,7 @@ import api from '../Api'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 
+
 const guardians = [
   {
     name: 'g1',

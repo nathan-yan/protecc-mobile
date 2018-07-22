@@ -188,6 +188,8 @@ export default class MainDashboard extends Component {
          
           <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
+
+        { this.state.headcountAdmin}
       </View>
     )
   }

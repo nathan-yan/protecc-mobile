@@ -29,6 +29,8 @@ export default class ScanCode extends Component {
     }else if (res.status === 409) {   // User is already in party
       Alert.alert("You're already in a party!")
     }else if (res.status === 200) {
+      await this.props.screenProps.setPartyState()
+
       navigate("Main");
     }
   }
