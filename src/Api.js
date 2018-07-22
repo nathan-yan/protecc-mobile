@@ -150,3 +150,46 @@ exports.stopHeadcount = function() {
     credentials: "include",
   })
 }
+
+exports.promoteMember = function(id) {
+  return fetch(BASE_URL + "/party/promote", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      'Content-Type': "application/json"
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+    credentials: "include",
+  })
+}
+
+exports.demoteMember = function(id) {
+  return fetch(BASE_URL + "/party/demote", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      'Content-Type': "application/json"
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+    credentials: "include",
+  })
+}
+
+
+exports.kickMember = function(id) {
+  return fetch(BASE_URL + "/party/kick", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      'Content-Type': "application/json"
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+    credentials: "include",
+  })
+}
