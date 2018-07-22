@@ -33,7 +33,7 @@ const RootStack = createStackNavigator({
   Main: MainScreen
 },
 {
-  initialRouteName: 'Main',
+  initialRouteName: 'SignUp',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
