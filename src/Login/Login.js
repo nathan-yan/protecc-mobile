@@ -4,6 +4,8 @@ import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 import Api from '../Api'
 
+const duration = 200 //animation duration
+
 export default class Login extends Component {
   constructor(props) {
     super(props)
@@ -29,8 +31,6 @@ export default class Login extends Component {
   }
 
   _keyboardDidShow = () => {
-    const duration = 200
-
     Animated.parallel([
       Animated.timing(this.state.keyboardHeight, {
         duration: duration,
@@ -48,10 +48,9 @@ export default class Login extends Component {
   }
 
   _keyboardDidHide = () => {
-    const duration = 200
     Animated.parallel([
       Animated.timing(this.state.keyboardHeight, {
-        duration: 165,
+        duration: duration,
         toValue: heightPercentageToDP(18),
       }),
       Animated.timing(this.state.imageWidth, {
@@ -70,7 +69,7 @@ export default class Login extends Component {
       this.setState({
         showIndicator: true
       })
-      Api.login(this.state.email, this.state.password).then((res => {
+      Api.createUser(this.state.email, this.state.phone, this.state.password).then((res => {
         this.setState({
           showIndicator: false
         })
@@ -92,10 +91,7 @@ export default class Login extends Component {
 
   render() {
     const imagePath = '../../assets/images/chicken.png'
-    // const imageRatio = 40 //in percentage
-    // const imageWidth = widthPercentageToDP(imageRatio)
-    // const imageHeight = Math.round(imageWidth * 564.0 / 307.0)
-
+  
     return (
       <View style={{flex: 1, backgroundColor: '#527AFF' }}>
         <View style={{flex: 1, marginLeft: widthPercentageToDP(16), marginTop: heightPercentageToDP(13)}}>
@@ -124,7 +120,7 @@ export default class Login extends Component {
             />
             <Button text="login" style={{width: widthPercentageToDP(40)}} onPress={this.onPressLogin} showIndicator={this.state.showIndicator}/>
             <View style={{flexDirection: 'row', marginTop: heightPercentageToDP(3)}}>
-              <TouchableOpacity disabled={this.state.showIndicator}>
+              <TouchableOpacity disabled={this.state.showIndicator} onPress={() => this.props.navigation.navigate('SignUp')}>
                 <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular', fontSize: 20}}>
                   sign up
                 </Text>
