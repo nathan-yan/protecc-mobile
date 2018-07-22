@@ -14,6 +14,23 @@ exports.login = function(email, password) {
   })
 }
 
+exports.createUser = function(name, email, password, avatar) {
+  return fetch(BASE_URL+"/user/create", {
+    method: "POST",
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: name, 
+      email: email, 
+      phone: phone,
+      password: password,
+      profilePicture: avatar
+    })
+  })
+}
+
 exports.reauthenticate = function(){
   return fetch(BASE_URL+"/user/reauthenticate", {
     method: "GET",
