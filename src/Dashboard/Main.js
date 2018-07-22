@@ -78,6 +78,19 @@ export default class MainDashboard extends Component {
       } 
     }
 
+    exports.initiateHeadCount = () => {
+      var initiator = false;
+      if (this.state.headcount){
+        // You're the initiator
+        initiator = true 
+      }
+      this.setState({
+        showingMenu: false,
+        headcount: true,
+        initiator: true
+      })
+    }
+
   }
 
   initiateHeadCount = () => {
@@ -217,7 +230,7 @@ export default class MainDashboard extends Component {
 
   render() {
     let partyData = this.props.screenProps.partyData;
-
+    console.log(this.state.initiator);
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
@@ -244,7 +257,7 @@ export default class MainDashboard extends Component {
           <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
-        { this.state.headcount && this.isAdmin && this.initiator &&
+        { this.state.headcount && this.isAdmin && this.state.initiator &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
           <TouchableWithoutFeedback>
@@ -285,7 +298,7 @@ export default class MainDashboard extends Component {
       </TouchableWithoutFeedback>
         }
 
-        { !this.initiator && this.state.headcount &&
+        { (!this.state.initiator && this.state.headcount) &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
           <TouchableWithoutFeedback>
