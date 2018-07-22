@@ -112,14 +112,14 @@ export default class MainDashboard extends Component {
     </TouchableOpacity>}
 
     <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
-      this.props.hideMenuCallback(); this.navigate("Main");
+      this.navigate("Main"); setTimeout(() => this.props.hideMenuCallback(), 350)
     }}>
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "map" ? '#527AFF' : "black"}}>map</Text>
     </TouchableOpacity>
 
   <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
-    this.props.hideMenuCallback(); this.navigate("People");
-  }}>
+      this.navigate("People"); setTimeout(() => this.props.hideMenuCallback(), 350);
+    }}>
     <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "people" ? '#527AFF' : "black"}}>people</Text>
   </TouchableOpacity>
 
