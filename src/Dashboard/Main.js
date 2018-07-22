@@ -136,6 +136,27 @@ export default class MainDashboard extends Component {
          
           <View style = {{position: "absolute", width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", backgroundColor: "white", zIndex: 10000}}>
             <Icon name="close" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {console.log("PRESSED!"); this.hideMenu()}}/>
+
+            <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+              <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "#527aff"}}>party code</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+              <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>headcount</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+              <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>people</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+              <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>chat</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+              <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>settings</Text>
+            </TouchableOpacity>
+
           </View>
         }
       </View>
