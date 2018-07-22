@@ -84,3 +84,10 @@ exports.updateLocation = function(lat, lon) {
     credentials: "include",
   })
 }
+
+exports.getParty = function() {
+  return fetch(BASE_URL+"/party", {
+    method: "GET",
+    credentials: "include",
+  });
+}

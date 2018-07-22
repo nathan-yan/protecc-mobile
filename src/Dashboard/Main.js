@@ -8,7 +8,7 @@ import Cookie from 'react-native-cookies';
 
 console.log(Cookie.get("https://api.protecc.us"));
 
-import { Mapbox } from "../../App";
+import Mapbox from '@mapbox/react-native-mapbox-gl';
 import Api from '../Api'
 
 export default class MainDashboard extends Component {
@@ -100,10 +100,6 @@ export default class MainDashboard extends Component {
   }
 
   render() {
-
-
-    Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
-
     return (
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
          <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {console.log("PRESSED!"); this.showMenu()}}/>

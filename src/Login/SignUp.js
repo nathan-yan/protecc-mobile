@@ -93,7 +93,7 @@ export default class SignUp extends Component {
     if (this.state.avatarSource) {
       image = <Image source={this.state.avatarSource} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
     } else {
-      image = <Image source={require('../../assets/images/happychicken.png')} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
+      image = <Image source={require('../../assets/images/default.png')} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
     }
 
     return(
