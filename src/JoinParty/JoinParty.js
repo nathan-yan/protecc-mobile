@@ -57,9 +57,10 @@ export default class Login extends Component {
     if (this.state.joinPartyInput.length < 6) {
       this.navigate('JoinPartyScanCode')
     } else {
-      api.joinParty(this.state.joinPartyInput).then((res) => {
+      api.joinParty(this.state.joinPartyInput).then( async (res) => {
         if (res.status === 200) {
-          this.navigate('People')
+          await this.props.screenProps.setPartyState()
+          this.navigate('Main')
         } else {
           Alert.alert('Party does not exist!')
         }
