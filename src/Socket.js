@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import { setPartyStateDirectly, getPartyState } from '../App.js'
 import { getParty } from './Api.js';
 
+import { headcountResponse, setNear } from './Dashboard/Main.js';
+
 BASE_URL = "https://api.protecc.us"
 
 const socket = io(BASE_URL);
@@ -28,12 +30,15 @@ socket.on('locationUpdate', (data) => {
 
 socket.on("notifyHeadcount", (data) => {
   console.log(data);
+  setNear(data);
 })
 
 socket.on("notifyHeadcountResponse", (data) => {
   const memberId = data.id;
   // this is the memberId that is represented in this headcount response
   
+  headcountResponse('response', memberId);
+
 });
 
 socket.on("notifyHeadcountEnd", (data) => {

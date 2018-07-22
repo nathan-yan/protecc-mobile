@@ -91,7 +91,7 @@ export default class MainDashboard extends Component {
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "#527aff"}}>party code</Text>
     </TouchableOpacity>
 
-    { this.isAdmin &&
+    { 
       <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}  onPress = {() => {
         console.log(this.props.navigator.state);
         if (this.props.navigator.state.routeName === 'Main'){
