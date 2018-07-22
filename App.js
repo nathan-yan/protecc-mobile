@@ -70,7 +70,7 @@ const RootStack = createStackNavigator({
   People: PeopleScreen
 },
 {
-  initialRouteName: 'Splash',
+  initialRouteName: 'People',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
