@@ -27,7 +27,6 @@ export default class App extends Component {
   }
 }
 
-
 const RootStack = createStackNavigator({
   Splash: SplashScreen,
   Login: LoginScreen,
@@ -37,7 +36,7 @@ const RootStack = createStackNavigator({
   Main: MainScreen
 },
 {
-  initialRouteName: 'Login',
+  initialRouteName: 'Splash',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
