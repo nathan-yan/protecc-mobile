@@ -77,6 +77,18 @@ export default class PeopleScreen extends Component {
     return false
   }
 
+  onPromoteMember = () => {
+
+  }
+
+  onDemoteMember = () => {
+
+  }
+
+  onKickMember = () => {
+    
+  }
+
   render() {
     return(
       <View style={{width: "100%", height: "100%", flexDirection: "column", backgroundColor: '#FFFFFF'}}>
@@ -93,7 +105,7 @@ export default class PeopleScreen extends Component {
         </View>
         {
           this.state.popUpMember !== undefined &&
-          <PopUp onExitPopUp={this.onExitPopUp} popUpMember={this.state.popUpMember} isAdmin={this.isAdmin()}/>
+          <PopUp onExitPopUp={this.onExitPopUp} popUpMember={this.state.popUpMember} isAdmin={this.isAdmin()} onKickMember={this.onKickMember} onPromoteMember={this.onPromoteMember} onDemoteMember={this.onDemoteMember}/>
         }
         { this.state.showingMenu && 
          
@@ -127,6 +139,16 @@ class PopUp extends Component {
     }).start(() => {
       this.props.onExitPopUp()
     })
+  }
+
+  isGuardian = (id) => {
+    let guardians = getPartyState().guardians
+    for (var i = 0; i < guardians.length; i++){
+      if (guardians[i]._id == id){
+        return true
+      } 
+    }
+    return false
   }
   
   getUserLocation = () => {
@@ -167,16 +189,27 @@ class PopUp extends Component {
                 </View>
               </Mapbox.PointAnnotation>
             </Mapbox.MapView>
-            { this.props.isAdmin &&
+            { this.props.isAdmin && this.props.popUpMember._id !== getUserState()._id &&
             <View style={{flexDirection: 'row', height: heightPercentageToDP(5), width: '100%'}}>
-              <TouchableHighlight style={{flex: 1}}>
-                <View style={{flex: 1, backgroundColor: '#527AFF', borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
-                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
-                    promote
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight style={{flex: 1}} >
+              {
+                this.isGuardian(this.props.popUpMember._id) ?
+                <TouchableHighlight style={{flex: 1}} onPress={this.props.onPromoteMember}>
+                  <View style={{flex: 1, backgroundColor: '#527AFF', borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
+                      promote
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+                :
+                <TouchableHighlight style={{flex: 1}} onPress={this.props.onDemoteMember}>
+                  <View style={{flex: 1, backgroundColor: '#527AFF', borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
+                      demote
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+              }
+              <TouchableHighlight style={{flex: 1}} onPress={this.props.onKickMember}>
                 <View style={{flex: 1, backgroundColor: '#F05056', borderBottomRightRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
                   <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
                     kick out
