@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { setPartyStateDirectly, getPartyState } from '../App.js'
 import { getParty, initiateHeadcount } from './Api.js';
 
-import { headcountResponse, setNear, initiateHeadCount_ } from './Dashboard/Main.js';
+import { headcountResponse, endHeadcount, setNear, initiateHeadCount_ } from './Dashboard/Main.js';
 
 BASE_URL = "https://api.protecc.us"
 
@@ -47,4 +47,5 @@ socket.on("notifyHeadcountEnd", (data) => {
   // data.far are those that responded to the headcount
   // data.unresponsive are those that didn't respond at all
 
+  endHeadcount()
 });

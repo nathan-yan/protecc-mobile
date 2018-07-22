@@ -98,6 +98,13 @@ export default class MainDashboard extends Component {
       })
     }
 
+    exports.endHeadcount = () => {
+      this.setState({
+        headcount: false
+      })
+    }
+  
+
   }
 
   initiateHeadCount = () => {
@@ -109,7 +116,7 @@ export default class MainDashboard extends Component {
     this.setState({
       showingMenu: false,
       headcount: true,
-      initiator: initiator
+      initiator: true
     })
   }
 
@@ -162,11 +169,16 @@ export default class MainDashboard extends Component {
     let annotations = partyData.members.map((member, i) => {
       // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
 
+      let append = '';
+      if (member._id === this.props.screenProps.userData._id) {
+        append = ' (You)'
+      }
+
       if (!member.location) return;
       return <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = {"member-" + i} coordinate = {[member.location.lon, member.location.lat]} key = {"member-" + i}>
       <View style = {{justifyContent: "center"}}>
         <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>
-          <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>{member.name}
+          <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>{member.name + append}
           </Text>
         </View>
         
@@ -217,23 +229,19 @@ export default class MainDashboard extends Component {
       this.setState({
         showingMenu: false
       })
-    
-
-    /*{ mocked: false,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:   timestamp: 1532220403446,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:   coords:
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:    { speed: 0,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:      heading: 0,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:      accuracy: 21.452999114990234,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:      longitude: -122.3359941,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:      altitude: 24,
-07-21 17:54:25.666 16762 21684 I ReactNativeJS:      latitude: 47.6064186 } }*/
-    
+    }    
+  handleDoneHeadcount = () => {
+    Api.stopHeadcount();
+    this.setState({
+      headcount: false
+    })
   }
 
+ 
   submitResponse = () => {
     Api.respondHeadcount() 
   }
+
 
   render() {
     let partyData = this.props.screenProps.partyData;
@@ -293,7 +301,9 @@ export default class MainDashboard extends Component {
             <View style={{flexDirection: 'row', height: heightPercentageToDP(5), width: '100%'}}>
               <TouchableHighlight style={{flex: 1}}>
                 <View style={{flex: 1, backgroundColor: '#527aff', borderBottomRightRadius: 8, borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
-                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
+                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}} onPress = {() => {
+                    this.handleDoneHeadcount()
+                  }}>
                     done
                   </Text>
                 </View>
