@@ -17,30 +17,64 @@ Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYX
 export default class MainDashboard extends Component {
   constructor(props){
     super(props)
-
+    
+    const headcount = this.props.navigation.getParam('headcount', false);
+    
     this.state = {
       coordinates: {
         longitude: 0,
-        latitude: 0
+        latitude: 0,
+        initLongitude: null, 
+        initLatitude: null
       },
-      showingMenu: false
+      showingMenu: false ^ headcount,
+      headcount: headcount
     }
 
     this.mapRef; 
 
   }
 
+  initiateHeadCount = () => {
+    this.setState({
+      showingMenu: false,
+      headcount: true
+    })
+  }
+
   updateLocation = async () => {
     navigator.geolocation.getCurrentPosition(async (res) => {
-      let longitude = res.coords.longitude + Math.random() * 5;
-      let latitude = res.coords.latitude + Math.random() * 5;
+      let longitude = res.coords.longitude;
+      let latitude = res.coords.latitude;
 
       let res_ = await Api.updateLocation(latitude, longitude);
 
       this.setState({
         coordinates: {
           longitude: longitude,
-          latitude: latitude
+          latitude: latitude,
+          initLongitude: this.state.coordinates.initLongitude,
+          initLatitude: this.state.coordinates.initLatitude,
+        }
+      })
+    });
+  }
+
+  updateLocationSetInit = async () => {
+    navigator.geolocation.getCurrentPosition(async (res) => {
+      let longitude = res.coords.longitude;
+      let latitude = res.coords.latitude;
+
+      let res_ = await Api.updateLocation(latitude, longitude);
+
+
+
+      this.setState({
+        coordinates: {
+          longitude: longitude,
+          latitude: latitude,
+          initLongitude: longitude,
+          initLatitude: latitude
         }
       });
     });
@@ -81,7 +115,7 @@ export default class MainDashboard extends Component {
     setInterval(this.updateLocation, 5000);
     const { navigate } = this.props.navigation;
   
-    this.updateLocation();
+    this.updateLocationSetInit();
 
     navigator.geolocation.watchPosition(async (res) => {
       let longitude = res.coords.longitude;
@@ -96,7 +130,9 @@ export default class MainDashboard extends Component {
       this.setState({
         coordinates: {
           longitude: longitude,
-          latitude: latitude
+          latitude: latitude,
+          initLongitude: this.state.coordinates.initLongitude,
+          initLatitude: this.state.coordinates.initLatitude,
         }
       })
     }, {
@@ -135,7 +171,7 @@ export default class MainDashboard extends Component {
     console.log(this.props.screenProps);
     let partyData = this.props.screenProps.partyData;
     
-  
+    console.log(this.state.coordinates)
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
@@ -147,18 +183,19 @@ export default class MainDashboard extends Component {
             <Icon name="my-location" size={30} color= "#555" />
         </TouchableOpacity>
       
+
         <Mapbox.MapView
             ref = {(map) => this.mapRef = map}
             styleURL={Mapbox.StyleURL.Light}
             zoomLevel={15}
-            centerCoordinate={[0, 0]}
+            centerCoordinate={[this.state.coordinates.initLongitude || 0, this.state.coordinates.initLatitude || 0]}
             style={{width: "100%", height: "100%"}}
             >
               {this.renderAnnotations()}            
            </Mapbox.MapView>
         { this.state.showingMenu && 
          
-          <Menu hideMenuCallback = {this.hideMenu}/>
+          <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
       </View>
     )

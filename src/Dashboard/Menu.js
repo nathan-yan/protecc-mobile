@@ -15,6 +15,9 @@ export default class MainDashboard extends Component {
   constructor(props){
     super(props)
 
+    const { navigate } = this.props.navigator;
+    this.navigate = navigate; 
+
     this.state = {
       slidingProgress: new Animated.Value(widthPercentageToDP(-100))
     }
@@ -49,11 +52,20 @@ export default class MainDashboard extends Component {
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "#527aff"}}>party code</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+    <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}  onPress = {() => {
+      if (this.props.navigator.state.routeName === 'main'){
+        this.props.initiateHeadCount();  
+      }else{
+        this.navigate("Main", {"headcount" : true})
+      }
+      
+    }}>
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>headcount</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
+    <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
+      this.navigate("People");
+    }}>
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>people</Text>
     </TouchableOpacity>
 
