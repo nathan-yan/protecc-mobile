@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { View, Image, Text, TextInput, TouchableOpacity, Animated, Keyboard  } from 'react-native'
-import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
-import { Button } from '../Component'
-import Api from '../Api'
-=======
 import { View, Image, Text, TextInput, TouchableOpacity, Animated, Keyboard, TouchableHighlight, Platform } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 import Api from '../Api'
 import ImagePicker from 'react-native-image-picker';
->>>>>>> image-picker
 
 const duration = 200
 
@@ -23,10 +16,7 @@ export default class SignUp extends Component {
       email: '',
       phone: '',
       password: '',
-<<<<<<< HEAD
-=======
       avatarSource: '',
->>>>>>> image-picker
       showIndicator: false,
       keyboardHeight: new Animated.Value(0)
     }
