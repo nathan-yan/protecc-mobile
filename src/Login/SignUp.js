@@ -4,7 +4,6 @@ import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 import Api from '../Api'
 import ImagePicker from 'react-native-image-picker';
-import base64Img from 'base64-img'
 
 const duration = 200
 
@@ -38,16 +37,8 @@ export default class SignUp extends Component {
   componentDidMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-
-    this.getDefaultAvatarPicture().then((data) => {
-      this.setState({avatarSource: data})
-    })
   }
 
-  getDefaultAvatarPicture = async () => {
-    var data = base64Img.base64Sync('../../assets/images/happychicken.png');
-    return data
-  }
 
   componentWillUnmount () {
     this.keyboardDidShowListener.remove();
@@ -57,7 +48,7 @@ export default class SignUp extends Component {
   _keyboardDidShow = () => {
     Animated.timing(this.state.keyboardHeight, {
       duration: duration,
-      toValue: -250
+      toValue: -280
     }).start()
   }
 
@@ -94,6 +85,12 @@ export default class SignUp extends Component {
   }
 
   render() {
+    let image
+    if (this.state.avatarSource) {
+      image = <Image source={this.state.avatarSource} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
+    } else {
+      image = <Image source={require('../../assets/images/happychicken.png')} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
+    }
 
     return(
       <Animated.View style={{flex: 1, backgroundColor: '#527AFF', marginTop: this.state.keyboardHeight }}>
@@ -103,7 +100,7 @@ export default class SignUp extends Component {
           </Text>
           <View style={{justifyContent: 'center', alignItems: 'center', marginRight: widthPercentageToDP(16), marginTop: heightPercentageToDP(3), marginBottom: heightPercentageToDP(3)}}>  
             <TouchableHighlight underlayColor="#2980b9" style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}} onPress={this.onAvatarPress}>
-              <Image source={this.state.avatarSource} style={{width: widthPercentageToDP(33), height: widthPercentageToDP(33), borderRadius: widthPercentageToDP(33)/2}}/>
+              {image}
             </TouchableHighlight>
             <Text style={{color: '#FFFFFF', fontFamily: 'sofia pro regular'}}>
               tap to change
