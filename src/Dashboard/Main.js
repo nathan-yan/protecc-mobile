@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 
@@ -25,6 +25,7 @@ export default class MainDashboard extends Component {
     }
 
     this.mapRef; 
+
   }
 
   updateLocation = async () => {
@@ -33,6 +34,8 @@ export default class MainDashboard extends Component {
       let latitude = res.coords.latitude;
 
       let res_ = await Api.updateLocation(latitude, longitude);
+
+      Alert.alert("UPDATED LOCATION!");
 
       this.setState({
         coordinates: {
@@ -71,6 +74,9 @@ export default class MainDashboard extends Component {
           latitude: latitude
         }
       })
+    }, {
+      enableHighAccuracy: true,
+      distanceFilter: 5
     });
 
 
@@ -101,6 +107,26 @@ export default class MainDashboard extends Component {
   }
 
   render() {
+    Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
+    console.log(this.props.screenProps);
+    let partyData = this.props.screenProps;
+    let annotations = partyData.members.map((member, i) => {
+      // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
+
+      console.log(member.location, member.name)
+      return <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = {"member-" + i} coordinate = {[member.location.lon, member.location.lat]} key = {"member-" + i}>
+      <View style = {{justifyContent: "center"}}>
+        <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>
+          <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>{member.name}
+          </Text>
+        </View>
+        
+        <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#f05056"}} />
+      </View>
+      </Mapbox.PointAnnotation>
+    })
+
+  
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
@@ -119,17 +145,8 @@ export default class MainDashboard extends Component {
             centerCoordinate={[this.state.coordinates.longitude, this.state.coordinates.latitude]}
             style={{width: "100%", height: "100%"}}
             >
-            <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = 'dfjsoiefjoef' coordinate = {[this.state.coordinates.longitude, this.state.coordinates.latitude]}>
-              <View style = {{justifyContent: "center"}}>
-                <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>
-                  <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>you 
-                  </Text>
-                </View>
-                
-                <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#f05056"}} />
-              </View>
-              </Mapbox.PointAnnotation>
-        </Mapbox.MapView>
+              {annotations}            
+           </Mapbox.MapView>
         { this.state.showingMenu && 
          
           <Menu hideMenuCallback = {this.hideMenu}/>
