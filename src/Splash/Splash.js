@@ -13,11 +13,11 @@ export default class Splash extends Component {
     // Otherwise, go to dashboard
 
     let res = await Api.reauthenticate();
-
+    console.log(res);
     if (res.status === 401){    // No account associated with session
       navigate('Login')
     }else if (res.status === 201){  // Logged in and has a party
-      navigate('Dashboard')
+      navigate('Main')
     }else if (res.status === 200) {   // Logged in and does not have a party
       navigate('CreateParty')
     }

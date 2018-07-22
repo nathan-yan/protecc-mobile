@@ -8,6 +8,10 @@
 
 import React, {Component} from 'react';
 import { createStackNavigator } from 'react-navigation';
+import Mapbox from '@mapbox/react-native-mapbox-gl';
+
+Mapbox.setAccessToken('pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ');
+exports.Mapbox = Mapbox;
 
 import LoginScreen from './src/Login/Login'
 import SplashScreen from './src/Splash/Splash'
@@ -23,6 +27,7 @@ export default class App extends Component {
   }
 }
 
+
 const RootStack = createStackNavigator({
   Splash: SplashScreen,
   Login: LoginScreen,
@@ -33,7 +38,7 @@ const RootStack = createStackNavigator({
   Main: MainScreen
 },
 {
-  initialRouteName: 'Main',
+  initialRouteName: 'Splash',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,

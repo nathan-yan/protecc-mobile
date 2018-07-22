@@ -76,6 +76,8 @@ export default class Login extends Component {
         })
         if (res.status === 200) {
           this.props.navigation.navigate('JoinParty')
+        }else if (res.status === 201){
+          this.props.navigation.navigate('Main');
         }
       }))
     }

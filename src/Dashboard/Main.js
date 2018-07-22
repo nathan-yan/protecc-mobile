@@ -2,45 +2,90 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, Text, TextInput } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 
-import Mapbox from "@mapbox/react-native-mapbox-gl";
+import { Mapbox } from "../../App";
 import Api from '../Api'
 
-Mapbox.setAccessToken(process.env.PROTECC_MAPBOX);
+console.log("STUFF");
 
-export default class Splash extends Component {
+export default class MainDashboard extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      coordinates: {
+        longitude: 0,
+        latitude: 0
+      }
+    }
+  }
+  
+  
   async componentDidMount() {
     const { navigate } = this.props.navigation;
   
-    // Check if user is in a group
-    // If user isn't in a group, go to login page
-    // Otherwise, go to dashboard
+    navigator.geolocation.getCurrentPosition(async (res) => {
+      let longitude = res.coords.longitude;
+      let latitude = res.coords.latitude;
 
-    let res = await Api.reauthenticate();
+      console.log(res)
 
-    if (res.status === 401){    // No account associated with session
-      navigate('Login')
-    }else if (res.status === 201){  // Logged in and has a party
-      navigate('Dashboard')
-    }else if (res.status === 200) {   // Logged in and does not have a party
-      navigate('CreateParty')
-    }
+      let res_ = await Api.updateLocation(latitude, longitude);
+      console.log(res_)
+
+      this.setState({
+        coordinates: {
+          longitude: longitude,
+          latitude: latitude
+        }
+      })
+    });
+  
+
+    navigator.geolocation.watchPosition(async (res) => {
+      let longitude = res.coords.longitude;
+      let latitude = res.coords.latitude;
+
+      console.log(res)
+
+      let res_ = await Api.updateLocation(latitude, longitude);
+      console.log(res_)
+
+      this.setState({
+        coordinates: {
+          longitude: longitude,
+          latitude: latitude
+        }
+      })
+    });
+
+    /*{ mocked: false,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:   timestamp: 1532220403446,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:   coords:
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:    { speed: 0,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:      heading: 0,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:      accuracy: 21.452999114990234,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:      longitude: -122.3359941,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:      altitude: 24,
+07-21 17:54:25.666 16762 21684 I ReactNativeJS:      latitude: 47.6064186 } }*/
+    
   }
 
   render() {
-    const imagePath = '../../assets/images/chicken_covering_nose.png'
-    const imageRatio = 40 //in percentage
-    const imageWidth = widthPercentageToDP(imageRatio)
-    const imageHeight = Math.round(imageWidth * 564.0 / 307.0)
+
+
+    Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
 
     return (
-      <View style={{flex: 1, flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
+      <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
         <Mapbox.MapView
           styleURL={Mapbox.StyleURL.Street}
           zoomLevel={15}
-          centerCoordinate={[11.256, 43.770]}
-          style={{flex: 1}}
-          userTrackingMode={Mapbox.UserTrackingModes.FollowWithHeading}
+          centerCoordinate={[this.state.coordinates.longitude, this.state.coordinates.latitude]}
+          style={{width: "100%", height: "100%"}}
           >
+            <Mapbox.PointAnnotation id = 'dfjsoiefjoef' coordinate = {[this.state.coordinates.longitude, this.state.coordinates.latitude]}>
+              <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#f05056"}} />
+            </Mapbox.PointAnnotation>
         </Mapbox.MapView>
       </View>
     )

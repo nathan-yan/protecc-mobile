@@ -42,3 +42,17 @@ exports.createParty = function() {
     }
   })
 }
+
+exports.updateLocation = function(lat, lon) {
+  return fetch(BASE_URL + "/update/location", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      'Content-Type': "application/json"
+    },
+    body: JSON.stringify({
+      lat: lat,
+      lon: lon
+    })
+  })
+}
