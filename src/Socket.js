@@ -38,7 +38,7 @@ socket.on("notifyHeadcountResponse", (data) => {
   const memberId = data.id;
   // this is the memberId that is represented in this headcount response
   
-  headcountResponse('response', memberId);
+  headcountResponse('responses', memberId);
 
 });
 

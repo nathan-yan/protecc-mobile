@@ -267,7 +267,7 @@ export default class MainDashboard extends Component {
             </Text>
             <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', width: widthPercentageToDP(60), height: widthPercentageToDP(25), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
               <View id_ = 'progress-total' style = {{position: "absolute", width: "100%", height: 25, borderRadius: 50, backgroundColor: "white", borderColor: "black", borderWidth: 3}}/>
-              <Animated.View id_ = 'progress-responded' style = {{position: "absolute", width: this.state.headcountStatus.nearBar, height: 25, borderRadius: 50, backgroundColor: "#9B51E0", borderColor: "transparent", borderWidth: 3}}/>
+              <Animated.View id_ = 'progress-responded' style = {{position: "absolute", width: this.state.headcountStatus.farBar, height: 25, borderRadius: 50, backgroundColor: "#9B51E0", borderColor: "transparent", borderWidth: 3}}/>
               <Animated.View id_ = 'progress-near' style = {{position: "absolute", width: this.state.headcountStatus.nearBar, height: 25, borderRadius: 50, backgroundColor: "#1CE170", borderColor: "transparent", borderWidth: 3}}/>
               
               <View style = {{position: "absolute", width: "100%", left: 0, top: 40, marginTop: 20, height: 25, borderRadius: 50, borderColor: "transparent", borderWidth: 3, justifyContent: "flex-end", flexDirection:"row"}}>
