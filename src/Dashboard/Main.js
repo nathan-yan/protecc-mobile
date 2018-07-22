@@ -26,6 +26,7 @@ export default class MainDashboard extends Component {
         initLongitude: null, 
         initLatitude: null
       },
+      initiator: false,
       showingMenu: false,
       headcount: headcount,
       headcountStatus: {
@@ -80,10 +81,15 @@ export default class MainDashboard extends Component {
   }
 
   initiateHeadCount = () => {
-    
+    var initiator = false;
+    if (this.state.headcount){
+      // You're the initiator
+      initiator = true 
+    }
     this.setState({
       showingMenu: false,
-      headcount: true
+      headcount: true,
+      initiator: true
     })
   }
 
@@ -238,7 +244,7 @@ export default class MainDashboard extends Component {
           <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
-        { this.state.headcount && this.isAdmin &&
+        { this.state.headcount && this.isAdmin && this.initiator &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
           <TouchableWithoutFeedback>
@@ -279,7 +285,7 @@ export default class MainDashboard extends Component {
       </TouchableWithoutFeedback>
         }
 
-        { true &&
+        { !this.initiator && this.state.headcount &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
           <TouchableWithoutFeedback>
