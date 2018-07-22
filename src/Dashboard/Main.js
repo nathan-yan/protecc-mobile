@@ -39,11 +39,9 @@ export default class MainDashboard extends Component {
 
     this.mapRef; 
 
-    if (this.props.screenProps.partyData.headcount.near != [] || this.props.screenProps.partyData.headcount.far != [] || this.props.screenProps.partyData.headcount.unresponsive != []){
-      this.setState({
-        showingMenu: false,
-        headcount: true
-      })
+    if (this.props.screenProps.partyData.headcount.near.length > 0 || this.props.screenProps.partyData.headcount.far.length > 0 || this.props.screenProps.partyData.headcount.unresponsive.length > 0){
+      this.state.showingMenu = false
+      this.state.headcount = true
     }
 
     exports.headcountResponse = (type, response) => {

@@ -44,7 +44,7 @@ export default class App extends Component {
   
   }
 
-  componentWillMount = async () => {  
+  componentDidMount = async () => {  
     // Check if user is in a group
     // If user isn't in a group, go to login page
     // Otherwise, go to dashboard
