@@ -49,7 +49,18 @@ export default class PeopleScreen extends Component {
     })
   }
 
+  getFlatListData(partyData) {
+    const allMembers = partyData.members
+    const guardians = partyData.guardians
+    var holder = {}
+    for (var i = 0; i < allMembers.length; i++) {
+      holder[allMembers[i]._id]
+    }
+  }
+
   render() {
+    let partyData = this.props.screenProps.partyData.partyData;
+    console.log(partyData)
     var data = ["guardians"]
     data.push(...guardians)
     data.push("members")

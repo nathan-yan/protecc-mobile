@@ -1,3 +1,4 @@
+window.navigator.userAgent = 'react-native';
 import io from 'socket.io-client';
 import { setPartyStateDirectly, getPartyState } from '../App.js'
 import { getParty } from './Api.js';
