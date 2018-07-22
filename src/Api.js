@@ -132,3 +132,23 @@ exports.initiateHeadcount = function(){
     credentials: "include",
   })
 }
+
+exports.respondHeadcount = function() {
+  return fetch(BASE_URL + "api/party/headcount/respond", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+    credentials: "include",
+  })
+}
+
+exports.stopHeadcount = function() {
+  return fetch(BASE_URL + "api/party/headcount/stop", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+    credentials: "include",
+  })
+}

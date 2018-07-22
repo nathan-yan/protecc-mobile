@@ -29,3 +29,16 @@ socket.on('locationUpdate', (data) => {
 socket.on("notifyHeadcount", (data) => {
   console.log(data);
 })
+
+socket.on("notifyHeadcountResponse", (data) => {
+  const memberId = data.id;
+  // this is the memberId that is represented in this headcount response
+  
+});
+
+socket.on("notifyHeadcountEnd", (data) => {
+  // data.near are those near the headcount
+  // data.far are those that responded to the headcount
+  // data.unresponsive are those that didn't respond at all
+
+});
