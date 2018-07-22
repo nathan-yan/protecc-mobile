@@ -1,108 +1,91 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Animated, Image, Text, TextInput, TouchableOpacity, TouchableHighlight,TouchableWithoutFeedback, Alert } from 'react-native'
+import { View, StyleSheet, Animated, Image, Text, TextInput, TouchableOpacity, TouchableHighlight,TouchableWithoutFeedback, Alert, FlatList } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
-import { Button, Button2 } from '../Component'
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Cookie from 'react-native-cookies';
-
-import Mapbox from '@mapbox/react-native-mapbox-gl';
-import Api from '../Api'
-import Menu from './Menu'
 import { setPartyStateDirectly, getPartyState, getUserState } from '../../App'
 
-Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
-
 export default class Summary extends Component {
-  constructor(props){
-    super(props)
+  getFlatListData = () => {
+    var { near, far } = this.props
+    var members = getPartyState().members
 
-    this.state ={};
+    var nearArray = []
+    var farArray = []
 
-    /*
-    this.averageLons = [];
-    this.averageLats = [];
-    this.radii = [];
-
-    for (var c = 0; c < this.props.clusters.length; c++){
-      let avgLon = 0;
-      let avgLat = 0;
-
-      this.props.clusters[c].map((index) => {
-        avgLon += this.props.members[index].location.lon
-        avgLat += this.props.members[index].location.lat
-      })
-
-      avgLon /= this.props.clusters[c].length;
-      avgLat /= this.props.clusters[c].length;
-    
-      let maxRadii = 0;
-      this.props.clusters[c].map((index) => {
-        let dist = (Math.max(Math.abs(this.props.members[index].location.lon - avgLon), Math.abs(this.props.members[index].location.lat - avgLat)));
-      
-        if (dist > maxRadii){
-          maxRadii = dist;
-        }
-      });
-
-      console.log(this.radii);
-
-      this.radii.push(maxRadii);
-      this.averageLons.push(avgLon);
-      this.averageLats.push(avgLat);
+    var obj = {}
+    for (var i = 0; i < members.length; i++) {
+      obj[members[i]._id] = members[i]
     }
 
-    this.mapRef = React.createRef();*/
+    for (var i = 0; i < near.length; i++) {
+      if (obj[near[i]]) {
+        nearArray.push(obj[near[i]])
+        delete obj[near[i]]
+      }
+    }
+    for (var i = 0; i < far.length; i++) {
+      if (obj[far[i]]) {
+        farArray.push(obj[near[i]])
+        delete obj[far[i]]
+      }
+    }
+    //obj contains missing members
+    var data = ['missing']
+    for (var key in obj) {
+      data.push(obj[key])
+    }
+    data.push('far')
+    data.push(...farArray)
+    data.push('near')
+    data.push(...nearArray)
+    return data
   }
-
-  renderAnnotations = () => {
-    /*let annotations = this.props.clusters.map((cluster, i) => {
-      // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
-
-      let append = '';
-      console.log(this.mapRef);
-
-      return <Mapbox.PointAnnotation anchor = {{x:0.5, y:0.5}} id = {"cluster-" + i} coordinate = {[this.averageLons[i], this.averageLats[i]]} key = {"cluster-" + i}>
-      <View style = {{justifyContent: "center"}}>
-        <View style = {{borderRadius: 50, width: 100, height: 100, backgroundColor: "#f05056"}} />
-      </View>
-      </Mapbox.PointAnnotation>
-    })
-
-    return annotations
-*/
-
-    let far = this.props.far.map((people, i) => {
-      return <Mapbox.PointAnnotation anchor = {{x:0.5, y:0.5}} id = {"far-" + i} coordinate = {[people.location.lon, people.location.lat]} key = {"far-" + i}>
-      <View style = {{justifyContent: "center"}}>
-        <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#8042f4"}} />
-      </View>
-      </Mapbox.PointAnnotation>
-    })
-
-    let near = this.props.far.map((people, i) => {
-      return <Mapbox.PointAnnotation anchor = {{x:0.5, y:0.5}} id = {"near-" + i} coordinate = {[people.location.lon, people.location.lat]} key = {"near-" + i}>
-      <View style = {{justifyContent: "center"}}>
-        <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#41f489"}} />
-      </View>
-      </Mapbox.PointAnnotation>
-    })
-
-    let points = far.concat(near);
-    return points
-  }
-
   render() {
-    
-  var mapView = <Mapbox.MapView
-      ref = {(map)=>this.mapRef = map}
-      styleURL={Mapbox.StyleURL.Light}
-      zoomLevel={15}
-      centerCoordinate={this.props.center}
-      style={{width: "100%", height: "100%"}}
-      >
-        {this.renderAnnotations()}            
-    </Mapbox.MapView>
-    return mapView
+    return (
+      <TouchableWithoutFeedback>
+        <View style={{backgroundColor: '#FFFFFF', height: heightPercentageToDP(80), width: widthPercentageToDP(80), borderRadius: 8}}>
+          <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+            <Text style={{color: '#000000', fontSize: 28, fontFamily: 'sofia pro regular'}}>
+              Summary
+            </Text>
+          </View>
+          <FlatList
+            style={{marginLeft: widthPercentageToDP(10)}}
+            data={this.getFlatListData()}
+            renderItem={({item}) => <SummaryItem data={item} />}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          <TouchableOpacity>
+
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  }
+}
+
+class SummaryItem extends Component {
+  render() {
+    if (this.props.data.name) {
+      const imageWidth = widthPercentageToDP(12)
+      return(
+        <View flexDirection="row" justifyContent="flex-start" alignItems="center" marginTop={8} marginBottom={8} width={widthPercentageToDP(80)}>
+          <Image source={{uri: this.props.data.profilePicture}} style={{width: imageWidth, height: imageWidth, borderRadius: imageWidth/2}}/>
+          <View>
+            <Text style={{color: getUserState()._id === this.props.data._id ? '#527AFF' : '#000000', fontSize: 16, fontFamily: 'sofia pro regular'}}>
+              {getUserState()._id === this.props.data._id ? "   " + this.props.data.name + " (you)" : "   " + this.props.data.name}
+            </Text>
+          </View>
+        </View>
+      )
+    } else {
+      return (
+        <View>
+          <Text style={{color: '#828282', fontSize: 16, fontFamily: 'sofia pro regular', marginTop: 20}}>
+            {this.props.data}
+          </Text>
+        </View>
+      )
+    }
   }
 }

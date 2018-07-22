@@ -293,6 +293,12 @@ export default class MainDashboard extends Component {
     return notNear;
   }
 
+  onExitHeadcountSummary = () => {
+    this.setState({
+      showingSummary: false
+    })
+  }
+
   render() {
     console.log(this.notNear());
     console.log(!this.state.initiator && this.state.headcount && this.notNear());
@@ -352,11 +358,11 @@ export default class MainDashboard extends Component {
             >
             </View>
             <View style={{flexDirection: 'row', height: heightPercentageToDP(5), width: '100%'}}>
-              <TouchableHighlight style={{flex: 1}}>
-                <View style={{flex: 1, backgroundColor: '#527aff', borderBottomRightRadius: 8, borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
-                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}} onPress = {() => {
+              <TouchableHighlight style={{flex: 1}} onPress={() => {
                     this.handleDoneHeadcount(); this.showSummary(); this.resetHeadcount();
                   }}>
+                <View style={{flex: 1, backgroundColor: '#527aff', borderBottomRightRadius: 8, borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
+                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}} >
                     done
                   </Text>
                 </View>
@@ -403,10 +409,12 @@ export default class MainDashboard extends Component {
         }
 
         
-        { this.state.showingSummary && 
-          <View style = {{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
-            <Summary far = {this.headcount.far} near = {this.headcount.near} center = {[this.state.coordinates.initLongitude || 0, this.state.coordinates.initLatitude || 0]}></Summary>
-          </View>
+        { this.state.showingSummary &&
+          <TouchableWithoutFeedback onPress={this.onExitHeadcountSummary}> 
+            <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%', zIndex: 3}}>
+                <Summary far = {this.headcount.far} near = {this.headcount.near}></Summary>
+            </View>
+          </TouchableWithoutFeedback>
         }
         
 
