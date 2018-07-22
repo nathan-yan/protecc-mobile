@@ -6,7 +6,6 @@ import { Button } from '../Component'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Cookie from 'react-native-cookies';
 
-console.log(Cookie.get("https://api.protecc.us"));
 
 import { Mapbox } from "../../App";
 import Api from '../Api'
@@ -43,7 +42,7 @@ export default class MainDashboard extends Component {
 
   render() {
     return <Animated.View style = {{position: "absolute", top: 0, left: this.state.slidingProgress, width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", backgroundColor: "white", zIndex: 10000}}>
-    <Icon name="close" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {console.log("PRESSED!"); this.hideMenu()}}/>
+    <Icon name="close" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.hideMenu()}}/>
 
     <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "#527aff"}}>party code</Text>

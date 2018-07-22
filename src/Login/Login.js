@@ -74,8 +74,10 @@ export default class Login extends Component {
           showIndicator: false
         })
         if (res.status === 200) {
+          await this.props.screenProps.setUserState()
           this.props.navigation.navigate('JoinParty')
         }else if (res.status === 201){
+          await this.props.screenProps.setUserState()
           await this.props.screenProps.setPartyState()
           this.props.navigation.navigate('Main');
         }

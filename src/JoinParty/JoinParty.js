@@ -21,7 +21,7 @@ export default class Login extends Component {
 
   createParty = async () => {
     let res = await api.createParty();
-    console.log(res);
+
     if (res.status === 401) {    // User is not logged in
       this.navigate("Login");
     }else if (res.status === 409){   // User is already in party

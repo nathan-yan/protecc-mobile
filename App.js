@@ -45,10 +45,9 @@ export default class App extends Component {
     let initialRoute;
 
     let res = await Api.reauthenticate();
+    var userJson;
     
     exports.splashReauthenticateStatus = res.status;
-
-    console.log(res)
 
     if (res.status === 401){    // No account associated with session
       initialRoute = 'Login'
@@ -56,12 +55,27 @@ export default class App extends Component {
       let res = await Api.getParty();
       var json = await res.json();
 
+      let userRes = await Api.getUser()
+      userJson = await userRes.json()
+
       initialRoute = 'Main'
+
+      this.setState({
+        userData: userJson
+      })
 
     }else if (res.status === 200) {   // Logged in and does not have a party
       initialRoute = 'JoinParty'
+
+      let userRes = await Api.getUser()
+      userJson = await userRes.json()
+
+      this.setState({
+        userData: userJson
+      })
     }
 
+    console.log(this.state)
     this.RootStack = createStackNavigator({
       Splash: SplashScreen,
       Login: LoginScreen,
@@ -69,6 +83,7 @@ export default class App extends Component {
       JoinPartyScanCode: ScanCodeScreen,
       SignUp: SignUpScreen,
       Main: MainScreen,
+      People: PeopleScreen
     },
     {
       initialRouteName: initialRoute,
@@ -101,9 +116,18 @@ export default class App extends Component {
     }
   }
 
+  setUserState = async () => {
+    let res = await Api.getUser()
+    let json = await res.json()
+    if (res.status === 200) {
+      this.setState({
+        userData: json,
+      })
+    }
+  }
+
   render() {
-    console.log(this.state.partyData);
-    return  this.state.initialized ? <this.RootStack screenProps = {{setPartyState: this.setPartyState, partyData: this.state.partyData}}/> : <SplashScreen /> 
+    return  this.state.initialized ? <this.RootStack screenProps = {{setUserState: this.setUserState, userData: this.state.userData, setPartyState: this.setPartyState, partyData: this.state.partyData}}/> : <SplashScreen /> 
   }
 }
 class Splash_ extends Component {

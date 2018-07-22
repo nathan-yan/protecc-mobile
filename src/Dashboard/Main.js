@@ -6,8 +6,6 @@ import { Button } from '../Component'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Cookie from 'react-native-cookies';
 
-console.log(Cookie.get("https://api.protecc.us"));
-
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 import Api from '../Api'
 import Menu from './Menu'
@@ -47,8 +45,6 @@ export default class MainDashboard extends Component {
   }
 
   goToLocation = () => {
-    console.log("SETTING")
-
     this.mapRef.setCamera({
       centerCoordinate: [this.state.coordinates.longitude, this.state.coordinates.latitude],
     });
@@ -59,7 +55,6 @@ export default class MainDashboard extends Component {
     let annotations = partyData.members.map((member, i) => {
       // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
 
-      console.log(member.location, member.name)
       if (!member.location) return;
       return <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = {"member-" + i} coordinate = {[member.location.lon, member.location.lat]} key = {"member-" + i}>
       <View style = {{justifyContent: "center"}}>
@@ -88,10 +83,7 @@ export default class MainDashboard extends Component {
       let latitude = res.coords.latitude;
       Alert.alert("UPDATED LOCATION!");
 
-      console.log(res)
-
       let res_ = await Api.updateLocation(latitude, longitude);
-      console.log(res_)
 
       this.setState({
         coordinates: {
@@ -132,14 +124,13 @@ export default class MainDashboard extends Component {
   }
 
   render() {
-    console.log(this.props.screenProps);
     let partyData = this.props.screenProps.partyData;
     
   
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
-         <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {console.log("PRESSED!"); this.showMenu()}}/>
+         <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.showMenu()}}/>
 
         <TouchableOpacity style = {{position: "absolute", top: 100, left: 30, borderRadius: 50, width: 50, height: 50, justifyContent: "center", alignItems: "center",  backgroundColor: "#fffb", zIndex: 1000}} onPress = {() => {
           this.goToLocation()

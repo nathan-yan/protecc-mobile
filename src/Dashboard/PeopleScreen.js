@@ -49,31 +49,46 @@ export default class PeopleScreen extends Component {
     })
   }
 
-  getFlatListData(partyData) {
+  getFlatListData = (partyData) => {
     const allMembers = partyData.members
     const guardians = partyData.guardians
     var holder = {}
     for (var i = 0; i < allMembers.length; i++) {
-      holder[allMembers[i]._id]
+      holder[allMembers[i]._id] = allMembers[i]
     }
-  }
+    for (var i = 0; i < guardians.length; i++) {
+      if (holder[guardians[i]._id]) {
+        delete holder[guardians[i]._id]
+      }
+    }
+    var regularMembers = []
+    for (var key in holder) {
+      regularMembers.push(holder[key])
+    }
 
-  render() {
-    let partyData = this.props.screenProps.partyData.partyData;
-    console.log(partyData)
     var data = ["guardians"]
     data.push(...guardians)
     data.push("members")
-    data.push(...members)
+    data.push(...regularMembers)
+
+    return data
+  }
+
+  isAdmin = (userData, partyData) => {
+    console.log(userData)
+  }
+
+  render() {
+    this.isAdmin(this.props.screenProps.userData)
     return(
       <View style={{width: "100%", height: "100%", flexDirection: "column", backgroundColor: '#FFFFFF'}}>
-        <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {console.log("PRESSED!"); this.showMenu()}}/>
+        <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.showMenu()}}/>
         <View style={{position: 'absolute', left: 30 + 10, top: 80}}>
           <Text style={{color: '#000000', fontSize: 40, fontFamily: 'sofia pro regular'}}>
             people
           </Text>
           <FlatList 
-            data={data}
+            data={this.getFlatListData(this.props.screenProps.partyData.partyData)}
             renderItem={({item}) => <PeopleItem data={item} onPress={this.onPersonPress}/>}
             keyExtractor={(item, index) => index.toString()}
           />

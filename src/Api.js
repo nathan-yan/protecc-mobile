@@ -70,6 +70,16 @@ exports.createParty = function() {
   })
 }
 
+exports.getUser = function() {
+  return fetch(BASE_URL+"/user", {
+    method: "GET",
+    headers: {
+      Accept: "application/json"
+    },
+    credentials: "include" 
+  })
+}
+
 exports.getParty = function(){
   return fetch(BASE_URL + "/party", {
     method: "GET",
@@ -93,11 +103,4 @@ exports.updateLocation = function(lat, lon) {
     }),
     credentials: "include",
   })
-}
-
-exports.getParty = function() {
-  return fetch(BASE_URL+"/party", {
-    method: "GET",
-    credentials: "include",
-  });
 }
