@@ -5,7 +5,7 @@ import { getParty, initiateHeadcount } from './Api.js';
 
 import { headcountResponse, endHeadcount, setNear, initiateHeadCount_ } from './Dashboard/Main.js';
 
-BASE_URL = "https://api.protecc.us"
+const BASE_URL = "https://api.protecc.us";
 
 const socket = io(BASE_URL);
 
@@ -29,6 +29,7 @@ socket.on('locationUpdate', (data) => {
 })
 
 socket.on("notifyHeadcount", (data) => {
+  console.log('NOTIFY HEADCOUNT DATA vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv')
   console.log(data);
   initiateHeadCount_();
   setNear(data);
