@@ -14,15 +14,17 @@ socket.on('locationUpdate', (data) => {
 
   let partyData = getPartyState();
 
-  let members = partyData.members;
+  if (partyData){
+    let members = partyData.members;
 
-  for (var i = 0; i < members.length; i++){
-    if (members[i]._id.toString() == data.id.toString()){
-      // Update that member
-      partyData.members[i].location = data.location;
-      break;
+    for (var i = 0; i < members.length; i++){
+      if (members[i]._id.toString() == data.id.toString()){
+        // Update that member
+        partyData.members[i].location = data.location;
+        break;
+      }
     }
-  }
 
-  setPartyStateDirectly({partyData:partyData});
+    setPartyStateDirectly({partyData:partyData});
+  }
 })
