@@ -249,9 +249,9 @@ export default class MainDashboard extends Component {
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
-         <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.showMenu()}}/>
+         <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1}} onPress = {() => {this.showMenu()}}/>
 
-        <TouchableOpacity style = {{position: "absolute", top: 100, left: 30, borderRadius: 50, width: 50, height: 50, justifyContent: "center", alignItems: "center",  backgroundColor: "#fffb", zIndex: 1000}} onPress = {() => {
+        <TouchableOpacity style = {{position: "absolute", top: 100, left: 30, borderRadius: 50, width: 50, height: 50, justifyContent: "center", alignItems: "center",  backgroundColor: "#fffb", zIndex: 1}} onPress = {() => {
           this.goToLocation()
         }}>
             <Icon name="my-location" size={30} color= "#555" />
@@ -274,13 +274,13 @@ export default class MainDashboard extends Component {
 
         { this.state.headcount && this.isAdmin && this.state.initiator &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
-        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
+        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%', zIndex: 2}}>
           <TouchableWithoutFeedback>
           <View style={{width: widthPercentageToDP(80), height: heightPercentageToDP(35), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center', elevation: 5}}>
             <Text style={{color: '#000000', fontSize: 22, fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 15}}>
               doing a head count...
             </Text>
-            <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', width: widthPercentageToDP(60), height: widthPercentageToDP(25), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
+            <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', width: widthPercentageToDP(60), height: widthPercentageToDP(25), borderRadius: widthPercentageToDP(25)/2, zIndex: 2}}>
               <View id_ = 'progress-total' style = {{position: "absolute", width: "100%", height: 25, borderRadius: 50, backgroundColor: "white", borderColor: "black", borderWidth: 3}}/>
               <Animated.View id_ = 'progress-responded' style = {{position: "absolute", width: this.state.headcountStatus.farBar, height: 25, borderRadius: 50, backgroundColor: "#9B51E0", borderColor: "transparent", borderWidth: 3}}/>
               <Animated.View id_ = 'progress-near' style = {{position: "absolute", width: this.state.headcountStatus.nearBar, height: 25, borderRadius: 50, backgroundColor: "#1CE170", borderColor: "transparent", borderWidth: 3}}/>
@@ -317,13 +317,13 @@ export default class MainDashboard extends Component {
 
         { (!this.state.initiator && this.state.headcount) &&
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
-        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
+        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%', zIndex: 2}}>
           <TouchableWithoutFeedback>
           <View style={{width: widthPercentageToDP(80), height: heightPercentageToDP(45), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center', elevation: 5}}>
             <Text style={{color: '#000000', fontSize: 22, fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 0}}>
               doing a head count...
             </Text>
-            <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems:"center", width: widthPercentageToDP(60), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
+            <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems:"center", width: widthPercentageToDP(60), borderRadius: widthPercentageToDP(25)/2, zIndex: 2}}>
               <Button2 text = "i'm ok!" onPress = {() => {
                 Api.respondHeadcount(); this.setState({headcount: false})
               }}></Button2>
