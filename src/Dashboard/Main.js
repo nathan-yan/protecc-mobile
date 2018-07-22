@@ -11,6 +11,8 @@ import Api from '../Api'
 import Menu from './Menu'
 import { setPartyStateDirectly, getPartyState, getUserState } from '../../App'
 
+import Summary from './Summary'
+
 Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
 
 export default class MainDashboard extends Component {
@@ -34,17 +36,13 @@ export default class MainDashboard extends Component {
         responses: [],
         nearBar: new Animated.Value(0),
         farBar: new Animated.Value(0),
-      }
+      },
+      showingSummary: false 
     }
+
+    this.headcount={};
 
     this.mapRef; 
-
-    if (this.props.screenProps.partyData.headcount.near != [] || this.props.screenProps.partyData.headcount.far != [] || this.props.screenProps.partyData.headcount.unresponsive != []){
-      this.setState({
-        showingMenu: false,
-        headcount: true
-      })
-    }
 
     exports.headcountResponse = (type, response) => {
       let headcountStatus = this.state.headcountStatus;
@@ -103,8 +101,15 @@ export default class MainDashboard extends Component {
         headcount: false
       })
     }
-  
+  }
 
+  componentDidMount () {
+    if (this.props.screenProps.partyData.headcount.near != [] || this.props.screenProps.partyData.headcount.far != [] || this.props.screenProps.partyData.headcount.unresponsive != []){
+      this.setState({
+        showingMenu: false,
+        headcount: true
+      })
+    }
   }
 
   initiateHeadCount = () => {
@@ -136,6 +141,27 @@ export default class MainDashboard extends Component {
         }
       })
     });
+  }
+
+  resetHeadcount = () => {
+    Animated.timing(this.state.headcountStatus.farBar, {
+      toValue: 0,
+      duration: 10
+    }).start()
+
+    Animated.timing(this.state.headcountStatus.nearBar, {
+      toValue: 0,
+      duration: 10
+    }).start()
+
+    let headcountStatus = this.state.headcountStatus;
+    headcountStatus.responses = []
+    headcountStatus.near = []  
+    headcountStatus.farBar = new Animated.Value(0);
+    headcountStatus.nearBar = new Animated.Value(0);
+    this.setState({
+      headcountStatus: headcountStatus
+    })
   }
 
   updateLocationSetInit = async () => {
@@ -242,6 +268,16 @@ export default class MainDashboard extends Component {
     Api.respondHeadcount() 
   }
 
+  showSummary = () => {
+    console.log(this.state);
+    this.headcount.far = this.state.headcountStatus.responses.slice();
+    this.headcount.near = this.state.headcountStatus.near.slice();
+
+    this.setState({
+      showingSummary: true 
+    })
+  }
+
 
   render() {
     let partyData = this.props.screenProps.partyData;
@@ -302,7 +338,7 @@ export default class MainDashboard extends Component {
               <TouchableHighlight style={{flex: 1}}>
                 <View style={{flex: 1, backgroundColor: '#527aff', borderBottomRightRadius: 8, borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
                   <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}} onPress = {() => {
-                    this.handleDoneHeadcount()
+                    this.handleDoneHeadcount(); this.showSummary(); this.resetHeadcount();
                   }}>
                     done
                   </Text>
@@ -331,7 +367,7 @@ export default class MainDashboard extends Component {
             </View>
             <View style = {{padding: 10}}>
               <Text style={{color: '#000000', fontSize: 17, textAlign: "center", fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 15}}>
-                let your guardian know you're responsive, even if you're not with your group!
+                let your guardian know you're there, even if you're not with your group!
               </Text>
             </View>
             <View
@@ -347,7 +383,16 @@ export default class MainDashboard extends Component {
         </View>
       </TouchableWithoutFeedback>
         }
-      </View>
+
+
+              </View>
     )
   }
 }
+
+/*
+{this.state.showingSummary && <View style = {{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}>
+        <Summary far = {this.headcount.far} near = {this.headcount.near} center = {[this.state.coordinates.initLongitude || 0, this.state.coordinates.initLatitude || 0]}></Summary>
+      </View>}
+        
+*/
