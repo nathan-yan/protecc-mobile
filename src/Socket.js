@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { setPartyStateDirectly, getPartyState } from '../App.js'
 import { getParty, initiateHeadcount } from './Api.js';
 
-import { headcountResponse, setNear } from './Dashboard/Main.js';
+import { headcountResponse, setNear, initiateHeadCount_ } from './Dashboard/Main.js';
 
 BASE_URL = "https://api.protecc.us"
 
@@ -30,7 +30,7 @@ socket.on('locationUpdate', (data) => {
 
 socket.on("notifyHeadcount", (data) => {
   console.log(data);
-  initiateHeadcount();
+  initiateHeadcount_();
   setNear(data);
 })
 

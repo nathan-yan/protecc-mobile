@@ -93,7 +93,7 @@ export default class MainDashboard extends Component {
 
   }
 
-  initiateHeadCount = () => {
+  initiateHeadCount_ = () => {
     var initiator = false;
     if (this.state.headcount){
       // You're the initiator
