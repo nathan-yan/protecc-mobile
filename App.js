@@ -34,6 +34,10 @@ export default class App extends Component {
     exports.getPartyState = () => {
       return this.state.partyData;
     }
+
+    exports.getUserState = () => {
+      return this.state.userData;
+    }
   
   }
 

@@ -6,6 +6,10 @@ import { Button } from '../Component'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Cookie from 'react-native-cookies';
 
+import { setPartyStateDirectly, getPartyState, getUserState } from '../../App'
+import { getParty } from '../Api';
+
+console.log(Cookie.get("https://api.protecc.us"));
 
 import { Mapbox } from "../../App";
 import Api from '../Api'
@@ -19,6 +23,15 @@ export default class MainDashboard extends Component {
 
     this.state = {
       slidingProgress: new Animated.Value(widthPercentageToDP(-100))
+    }
+
+    this.isAdmin = false;
+    let guardians = getPartyState().guardians
+    
+    for (var i = 0; i < guardians.length; i++){
+      if (guardians[i]._id == getUserState._id){
+        this.isAdmin = true
+      } 
     }
   }
 
@@ -44,6 +57,8 @@ export default class MainDashboard extends Component {
   }
 
   render() {
+
+
     return <Animated.View style = {{position: "absolute", top: 0, left: this.state.slidingProgress, width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", backgroundColor: "white", zIndex: 10000}}>
     <Icon name="close" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.hideMenu()}}/>
 
@@ -51,16 +66,18 @@ export default class MainDashboard extends Component {
       <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "#527aff"}}>party code</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}  onPress = {() => {
-      if (this.props.navigator.state.routeName === 'main'){
-        this.props.initiateHeadCount();  
-      }else{
-        this.navigate("Main", {"headcount" : true})
-      }
-      
-    }}>
-      <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>headcount</Text>
-    </TouchableOpacity>
+    { this.isAdmin &&
+      <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}  onPress = {() => {
+        console.log(this.props.navigator.state);
+        if (this.props.navigator.state.routeName === 'Main'){
+          this.props.initiateHeadCount();  
+        }else{
+          this.navigate("Main", {"headcount" : true})
+        }
+        
+      }}>
+        <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>headcount</Text>
+      </TouchableOpacity>}
 
     <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
       this.navigate("People");

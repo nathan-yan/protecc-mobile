@@ -7,7 +7,6 @@ import Mapbox from '@mapbox/react-native-mapbox-gl';
 
 import Menu from './Menu'
 
-
 const guardians = [
   {
     name: 'g1',
