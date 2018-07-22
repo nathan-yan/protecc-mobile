@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image, TouchableHighlight, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, FlatList, Image, TouchableHighlight, TouchableWithoutFeedback, Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../Api'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
+import { setPartyStateDirectly, getPartyState, getUserState } from '../../App'
 
 import Menu from './Menu'
 
@@ -66,13 +67,17 @@ export default class PeopleScreen extends Component {
     return data
   }
 
-  isAdmin = (userData, partyData) => {
-    console.log(userData)
+  isAdmin = () => {
+    let guardians = getPartyState().guardians
+    for (var i = 0; i < guardians.length; i++){
+      if (guardians[i]._id == getUserState()._id){
+        return true
+      } 
+    }
+    return false
   }
 
   render() {
-    console.log(this.props.screenProps)
-    this.isAdmin(this.props.screenProps.userData)
     return(
       <View style={{width: "100%", height: "100%", flexDirection: "column", backgroundColor: '#FFFFFF'}}>
         <Icon name="menu" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.showMenu()}}/>
@@ -88,11 +93,11 @@ export default class PeopleScreen extends Component {
         </View>
         {
           this.state.popUpMember !== undefined &&
-          <PopUp onExitPopUp={this.onExitPopUp} popUpMember={this.state.popUpMember}/>
+          <PopUp onExitPopUp={this.onExitPopUp} popUpMember={this.state.popUpMember} isAdmin={this.isAdmin()}/>
         }
         { this.state.showingMenu && 
          
-         <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
+         <Menu currentScreen="people" hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
        }
       </View>
     )
@@ -104,18 +109,39 @@ class PopUp extends Component {
     super(props)
 
     this.state = {
-
+      opacity: new Animated.Value(0),
     }
   }
 
+  componentDidMount() {
+    Animated.timing(this.state.opacity, {
+      toValue: 1,
+      duration: 300
+    }).start()
+  }
+
   handleOuterPress = () => {
-    this.props.onExitPopUp()
+    Animated.timing(this.state.opacity, {
+      toValue: 0,
+      duration: 300
+    }).start(() => {
+      this.props.onExitPopUp()
+    })
+  }
+  
+  getUserLocation = () => {
+    let member = getPartyState().members.find((val) => {
+      return val._id === this.props.popUpMember._id
+    })
+
+    return member.location
   }
 
   render() {
+    var location = this.getUserLocation()
     return(
       <TouchableWithoutFeedback onPress={this.handleOuterPress}>
-        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
+        <Animated.View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%', opacity: this.state.opacity}}>
           <TouchableWithoutFeedback>
           <View style={{width: widthPercentageToDP(70), height: heightPercentageToDP(55), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center', elevation: 5}}>
             <Text style={{color: '#000000', fontSize: 22, fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 15}}>
@@ -127,10 +153,21 @@ class PopUp extends Component {
             <Mapbox.MapView
               styleURL={Mapbox.StyleURL.Light}
               zoomLevel={15}
-              centerCoordinate={[3, 3]}
+              centerCoordinate={[location.lon, location.lat]}
               style={{width: "100%", flex: 1, marginTop: -1 * widthPercentageToDP(23)/2, zIndex: 0}}
             >
+              <Mapbox.PointAnnotation id="userPoint" key="userPoint"  coordinate={[location.lon, location.lat]}> 
+                <View style = {{justifyContent: "center"}}>
+                  <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>
+                    <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>{this.props.popUpMember.name}
+                    </Text>
+                  </View>
+                  
+                  <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#f05056"}} />
+                </View>
+              </Mapbox.PointAnnotation>
             </Mapbox.MapView>
+            { this.props.isAdmin &&
             <View style={{flexDirection: 'row', height: heightPercentageToDP(5), width: '100%'}}>
               <TouchableHighlight style={{flex: 1}}>
                 <View style={{flex: 1, backgroundColor: '#527AFF', borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
@@ -139,7 +176,7 @@ class PopUp extends Component {
                   </Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight style={{flex: 1}}>
+              <TouchableHighlight style={{flex: 1}} >
                 <View style={{flex: 1, backgroundColor: '#F05056', borderBottomRightRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
                   <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
                     kick out
@@ -147,9 +184,10 @@ class PopUp extends Component {
                 </View>
               </TouchableHighlight>
             </View>
+            }
           </View>
           </TouchableWithoutFeedback>
-        </View>
+        </Animated.View>
       </TouchableWithoutFeedback>
     )
   }
@@ -164,7 +202,7 @@ class PeopleItem extends Component {
           <View flexDirection="row" justifyContent="flex-start" alignItems="center" marginTop={8} marginBottom={8} width={widthPercentageToDP(80)}>
             <Image source={{uri: this.props.data.profilePicture}} style={{width: imageWidth, height: imageWidth, borderRadius: imageWidth/2}}/>
             <View>
-              <Text style={{color: '#000000', fontSize: 16, fontFamily: 'sofia pro regular'}}>
+              <Text style={{color: getUserState()._id === this.props.data._id ? '#527AFF' : '#000000', fontSize: 16, fontFamily: 'sofia pro regular'}}>
                 {"   " + this.props.data.name}
               </Text>
             </View>

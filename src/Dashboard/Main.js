@@ -39,7 +39,7 @@ export default class MainDashboard extends Component {
 
     this.mapRef; 
 
-    if (this.props.screenProps.partyData.headcount.near == [] && this.props.screenProps.partyData.headcount.far == [] && this.props.screenProps.partyData.headcount.unresponsive == []){
+    if (this.props.screenProps.partyData.headcount.near != [] || this.props.screenProps.partyData.headcount.far != [] || this.props.screenProps.partyData.headcount.unresponsive != []){
       this.setState({
         showingMenu: false,
         headcount: true
@@ -269,7 +269,7 @@ export default class MainDashboard extends Component {
            </Mapbox.MapView>
         { this.state.showingMenu && 
          
-          <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
+          <Menu currentScreen="map" hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
         { this.state.headcount && this.isAdmin && this.state.initiator &&
