@@ -14,6 +14,7 @@ console.log(Cookie.get("https://api.protecc.us"));
 
 import { Mapbox } from "../../App";
 import Api from '../Api'
+import { NavigationActions, StackActions } from 'react-navigation'; 
 
 export default class MainDashboard extends Component {
   constructor(props){
@@ -68,6 +69,18 @@ export default class MainDashboard extends Component {
       this.setState((prevState) => ({
         showingQRCode: !prevState.showingQRCode
       }));
+    })
+  }
+
+  logout = () => {
+    Api.logout().then((res) => {
+      if (res.status === 200) {
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Login' })],
+        });
+        this.props.navigator.dispatch(resetAction);
+      }
     })
   }
 
@@ -127,8 +140,8 @@ export default class MainDashboard extends Component {
     <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "chat" ? '#527AFF' : "black"}}>chat</Text>
   </TouchableOpacity>
 
-  <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "settings" ? '#527AFF' : "black"}}>settings</Text>
+  <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress={this.logout}>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "settings" ? '#527AFF' : "black"}}>logout</Text>
   </TouchableOpacity>
 
     </View>
