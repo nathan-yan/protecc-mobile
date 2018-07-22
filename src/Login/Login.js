@@ -69,7 +69,7 @@ export default class Login extends Component {
       this.setState({
         showIndicator: true
       })
-      Api.createUser(this.state.email, this.state.phone, this.state.password).then((res => {
+      Api.login(this.state.email, this.state.password).then((res => {
         this.setState({
           showIndicator: false
         })
