@@ -70,6 +70,16 @@ exports.createParty = function() {
   })
 }
 
+exports.getParty = function(){
+  return fetch(BASE_URL + "/party", {
+    method: "GET",
+    headers: {
+      Accept: "application/json"
+    },
+    credentials: "include" 
+  })
+}
+
 exports.updateLocation = function(lat, lon) {
   return fetch(BASE_URL + "/update/location", {
     method: "POST",
