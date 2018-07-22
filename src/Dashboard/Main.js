@@ -32,8 +32,8 @@ export default class MainDashboard extends Component {
       showingMenu: false,
       headcount: headcount,
       headcountStatus: {
-        near: [], 
-        responses: [],
+        near: this.props.screenProps.partyData.headcount.near, 
+        responses: this.props.screenProps.partyData.headcount.far,
         nearBar: new Animated.Value(0),
         farBar: new Animated.Value(0),
       },
