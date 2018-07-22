@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, TouchableHighlight,TouchableWithoutFeedback, Alert } from 'react-native'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 
@@ -26,7 +26,11 @@ export default class MainDashboard extends Component {
         initLatitude: null
       },
       showingMenu: false,
-      headcount: headcount
+      headcount: headcount,
+      headcountStatus: {
+        near: {}, 
+        responses: {}
+      }
     }
 
     this.mapRef; 
@@ -115,7 +119,6 @@ export default class MainDashboard extends Component {
     navigator.geolocation.watchPosition(async (res) => {
       let longitude = res.coords.longitude;
       let latitude = res.coords.latitude;
-      Alert.alert("UPDATED LOCATION!");
 
       let res_ = await Api.updateLocation(latitude, longitude);
 
@@ -162,7 +165,6 @@ export default class MainDashboard extends Component {
   render() {
     let partyData = this.props.screenProps.partyData;
     
-    console.log(this.state.coordinates)
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
@@ -189,7 +191,46 @@ export default class MainDashboard extends Component {
           <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
-        { this.state.headcountAdmin}
+        { this.state.headcount && 
+          <TouchableWithoutFeedback onPress={this.handleOuterPress}>
+        <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%'}}>
+          <TouchableWithoutFeedback>
+          <View style={{width: widthPercentageToDP(80), height: heightPercentageToDP(35), backgroundColor: "#FFFFFF", borderRadius: 8, alignItems: 'center', elevation: 5}}>
+            <Text style={{color: '#000000', fontSize: 22, fontFamily: 'sofia pro regular', marginTop: 15, marginBottom: 15}}>
+              doing a head count...
+            </Text>
+            <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', width: widthPercentageToDP(60), height: widthPercentageToDP(25), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
+              <View id_ = 'progress-total' style = {{position: "absolute", width: "100%", height: 25, borderRadius: 50, backgroundColor: "white", borderColor: "black", borderWidth: 3}}/>
+              <View id_ = 'progress-responded' style = {{position: "absolute", width: "80%", height: 25, borderRadius: 50, backgroundColor: "#9B51E0", borderColor: "transparent", borderWidth: 3}}/>
+              <View id_ = 'progress-near' style = {{position: "absolute", width: "40%", height: 25, borderRadius: 50, backgroundColor: "#1CE170", borderColor: "transparent", borderWidth: 3}}/>
+              
+              <View style = {{position: "absolute", width: "100%", left: 0, top: 40, marginTop: 20, height: 25, borderRadius: 50, borderColor: "transparent", borderWidth: 3, justifyContent: "flex-end", flexDirection:"row"}}>
+                <Text style = {{color: '#1ce170', fontSize: 12, fontFamily: 'sofia pro regular', flex: 1}}>12 near you</Text>
+                <Text style = {{color: '#000', fontSize: 12, fontFamily: 'sofia pro regular', flex: 2, alignSelf:"flex-end", textAlign:"right"}}>5 others responded</Text>
+              </View>
+              
+            </View>
+            <View
+              styleURL={Mapbox.StyleURL.Light}
+              zoomLevel={15}
+              centerCoordinate={[3, 3]}
+              style={{width: "100%", flex: 1, marginTop: -1 * widthPercentageToDP(23)/2, zIndex: 0}}
+            >
+            </View>
+            <View style={{flexDirection: 'row', height: heightPercentageToDP(5), width: '100%'}}>
+              <TouchableHighlight style={{flex: 1}}>
+                <View style={{flex: 1, backgroundColor: '#527aff', borderBottomRightRadius: 8, borderBottomLeftRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
+                  <Text style={{color: '#fff', fontFamily: 'sofia pro regular', fontSize: 16}}>
+                    done
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+        }
       </View>
     )
   }

@@ -52,11 +52,13 @@ export default class App extends Component {
     var userJson;
     
     exports.splashReauthenticateStatus = res.status;
+    console.log(res);
 
     if (res.status === 401){    // No account associated with session
       initialRoute = 'Login'
     }else if (res.status === 201){  // Logged in and has a party
       let res = await Api.getParty();
+      console.log(res);
       var json = await res.json();
 
       let userRes = await Api.getUser()

@@ -25,3 +25,7 @@ socket.on('locationUpdate', (data) => {
     setPartyStateDirectly({partyData:partyData});
   }
 })
+
+socket.on("notifyHeadcount", (data) => {
+  console.log(data);
+})

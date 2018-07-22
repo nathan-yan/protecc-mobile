@@ -22,6 +22,23 @@ exports.login = function(email, password) {
   })
 }
 
+exports.logout = function(email, password) {
+  return fetch(BASE_URL+"/login", {
+    method: "POST",
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password
+    }),
+    credentials: "include",
+
+  })
+}
+
 exports.createUser = function(name, email, phone, password, avatar) {
   return fetch(BASE_URL+"/user/create", {
     method: "POST",
@@ -101,6 +118,17 @@ exports.updateLocation = function(lat, lon) {
       lat: lat,
       lon: lon
     }),
+    credentials: "include",
+  })
+}
+
+exports.initiateHeadcount = function(){
+  console.log("INITIATING HEADCOUNT");
+  return fetch(BASE_URL + "api/party/headcount", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
     credentials: "include",
   })
 }

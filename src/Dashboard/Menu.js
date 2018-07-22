@@ -70,8 +70,22 @@ export default class MainDashboard extends Component {
       <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}  onPress = {() => {
         console.log(this.props.navigator.state);
         if (this.props.navigator.state.routeName === 'Main'){
+          Api.initiateHeadcount();
+          fetch(BASE_URL + "/api/party/headcount", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+            },
+            credentials: "include",
+          }).then((res)=>{
+            console.log(res);
+            console.log("\n\n\nn\n\n\dsofjsiodjfosjfj")
+          }).catch((err)=>{
+            console.log(err)
+          })
           this.props.initiateHeadCount();  
         }else{
+          Api.initiateHeadcount();
           this.navigate("Main", {"headcount" : true})
         }
         
