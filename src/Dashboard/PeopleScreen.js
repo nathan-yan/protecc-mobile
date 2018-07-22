@@ -5,6 +5,9 @@ import api from '../Api'
 import { widthPercentageToDP, heightPercentageToDP } from '../scaling';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 
+import Menu from './Menu'
+
+
 const guardians = [
   {
     name: 'g1',
@@ -33,8 +36,21 @@ export default class PeopleScreen extends Component {
     super(props)
 
     this.state = {
-      popUpMember: undefined
+      popUpMember: undefined,
+      showingMenu: false,
     }
+  }
+
+  showMenu = () => {
+    this.setState({
+      showingMenu: true
+    })
+  }
+
+  hideMenu = () => {
+    this.setState({
+      showingMenu: false
+    })
   }
 
   onPersonPress = (member) => {
@@ -89,7 +105,7 @@ export default class PeopleScreen extends Component {
             people
           </Text>
           <FlatList 
-            data={this.getFlatListData(this.props.screenProps.partyData.partyData)}
+            data={this.getFlatListData(this.props.screenProps.partyData)}
             renderItem={({item}) => <PeopleItem data={item} onPress={this.onPersonPress}/>}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -98,6 +114,10 @@ export default class PeopleScreen extends Component {
           this.state.popUpMember !== undefined &&
           <PopUp onExitPopUp={this.onExitPopUp} popUpMember={this.state.popUpMember}/>
         }
+        { this.state.showingMenu && 
+         
+         <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
+       }
       </View>
     )
   }
