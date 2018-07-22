@@ -79,6 +79,7 @@ export default class PeopleScreen extends Component {
   }
 
   render() {
+    console.log(this.props.screenProps)
     this.isAdmin(this.props.screenProps.userData)
     return(
       <View style={{width: "100%", height: "100%", flexDirection: "column", backgroundColor: '#FFFFFF'}}>

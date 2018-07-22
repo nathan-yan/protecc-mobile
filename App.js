@@ -75,7 +75,7 @@ export default class App extends Component {
       })
     }
 
-    console.log(this.state)
+    console.log(initialRoute)
     this.RootStack = createStackNavigator({
       Splash: SplashScreen,
       Login: LoginScreen,

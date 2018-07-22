@@ -25,7 +25,7 @@ export default class MainDashboard extends Component {
         initLongitude: null, 
         initLatitude: null
       },
-      showingMenu: false ^ headcount,
+      showingMenu: false,
       headcount: headcount
     }
 
