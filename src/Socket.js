@@ -5,7 +5,7 @@ import { getParty, initiateHeadcount } from './Api.js';
 
 import { headcountResponse, endHeadcount, setNear, initiateHeadCount_ } from './Dashboard/Main.js';
 
-BASE_URL = "https://api.protecc.us"
+const BASE_URL = "https://api.protecc.us";
 
 const socket = io(BASE_URL);
 

@@ -102,18 +102,18 @@ export default class MainDashboard extends Component {
       console.log(this.props.navigator.state);
       if (this.props.navigator.state.routeName === 'Main'){
         Api.initiateHeadcount();
-        fetch(BASE_URL + "/api/party/headcount", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-          },
-          credentials: "include",
-        }).then((res)=>{
-          console.log(res);
-          console.log("\n\n\nn\n\n\dsofjsiodjfosjfj")
-        }).catch((err)=>{
-          console.log(err)
-        })
+        // fetch(BASE_URL + "/api/party/headcount", {
+        //   method: "POST",
+        //   headers: {
+        //     Accept: "application/json",
+        //   },
+        //   credentials: "include",
+        // }).then((res)=>{
+        //   console.log(res);
+        //   console.log("\n\n\nn\n\n\dsofjsiodjfosjfj")
+        // }).catch((err)=>{
+        //   console.log(err)
+        // })
         this.props.initiateHeadCount();  
       }else{
         Api.initiateHeadcount();

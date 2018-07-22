@@ -3,7 +3,7 @@ import storage from "react-native";
 
 
 const BASE_URL = "https://api.protecc.us/api"
-//const BASE_URL = "http://192.168.0.37:3000/api"
+//const BASE_URL = "http://10.24.75.135:3000/api"
 
 exports.login = function(email, password) {
   return fetch(BASE_URL+"/login", {

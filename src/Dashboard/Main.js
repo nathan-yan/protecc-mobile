@@ -89,7 +89,7 @@ export default class MainDashboard extends Component {
 
     exports.initiateHeadCount_ = () => {
       var initiator = false;
-      if (this.state.headcount){
+      if (this.state.headcount ){
         // You're the initiator
         initiator = true 
       }
@@ -282,7 +282,13 @@ export default class MainDashboard extends Component {
     })
   }
 
+  notNear = () => {
+    var nearIds = this.state.headcountStatus.near.slice();
 
+    console.log('MY OWN ID ' + this.props.screenProps.userData._id);
+    return nearIds.includes(this.props.screenProps.userData._id);
+  }
+  
   render() {
     let partyData = this.props.screenProps.partyData;
     console.log(this.state.initiator);
@@ -312,7 +318,9 @@ export default class MainDashboard extends Component {
           <Menu currentScreen="map" hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
-        { this.state.headcount && this.isAdmin && this.state.initiator &&
+        
+        { (this.state.headcount && this.state.initiator) &&
+        // show progress if headcount and is initiator
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%', zIndex: 2}}>
           <TouchableWithoutFeedback>
@@ -355,7 +363,8 @@ export default class MainDashboard extends Component {
       </TouchableWithoutFeedback>
         }
 
-        { (!this.state.initiator && this.state.headcount) &&
+        { (!this.state.initiator && this.state.headcount && this.notNear()) &&
+        // headcount and not initiator, show im alive
           <TouchableWithoutFeedback onPress={this.handleOuterPress}>
         <View style={{position: 'absolute', justifyContent: 'center', alignItems: 'center', backgroundColor: "#0009", width: '100%', height: '100%', zIndex: 2}}>
           <TouchableWithoutFeedback>
