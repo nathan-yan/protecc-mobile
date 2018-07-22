@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { createStackNavigator } from 'react-navigation';
 import Mapbox from '@mapbox/react-native-mapbox-gl';
 
+import { Easing, Animated } from 'react-native'
+
 Mapbox.setAccessToken('pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ');
 
 exports.partyDataContext;
@@ -42,7 +44,7 @@ export default class App extends Component {
   
   }
 
-  componentWillMount = async () => {  
+  componentDidMount = async () => {  
     // Check if user is in a group
     // If user isn't in a group, go to login page
     // Otherwise, go to dashboard
@@ -96,9 +98,28 @@ export default class App extends Component {
     {
       initialRouteName: initialRoute,
       headerMode: 'none',
-        navigationOptions: {
-            headerVisible: false,
-        }
+      navigationOptions: {
+          headerVisible: false,
+      },
+      transitionConfig: () => ({
+        transitionSpec: {
+          duration: 300,
+          easing: Easing.out(Easing.poly(4)),
+          timing: Animated.timing,
+        },
+        screenInterpolator: sceneProps => {
+          const { position, scene } = sceneProps
+
+          const thisSceneIndex = scene.index
+
+          const opacity = position.interpolate({
+            inputRange: [thisSceneIndex - 1, thisSceneIndex],
+            outputRange: [0, 1],
+          })
+
+          return { opacity } 
+        },
+      })
     })
 
     if (res.status === 201){

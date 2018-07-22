@@ -14,6 +14,7 @@ console.log(Cookie.get("https://api.protecc.us"));
 
 import { Mapbox } from "../../App";
 import Api from '../Api'
+import { NavigationActions, StackActions } from 'react-navigation'; 
 
 export default class MainDashboard extends Component {
   constructor(props){
@@ -71,6 +72,18 @@ export default class MainDashboard extends Component {
     })
   }
 
+  logout = () => {
+    Api.logout().then((res) => {
+      if (res.status === 200) {
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Login' })],
+        });
+        this.props.navigator.dispatch(resetAction);
+      }
+    })
+  }
+
   render() {
     return <Animated.View style = {{position: "absolute", top: 0, left: this.state.slidingProgress, width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", backgroundColor: "white", zIndex: 10000}}>
     <Icon name="close" size={30} color="#000" style = {{position: "absolute", top: 30 + 10, left: 30 + 10, zIndex: 1000}} onPress = {() => {this.hideMenu()}}/>
@@ -112,23 +125,23 @@ export default class MainDashboard extends Component {
     </TouchableOpacity>}
 
     <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
-      this.props.hideMenuCallback(); this.navigate("Main");
+      this.navigate("Main"); setTimeout(() => this.props.hideMenuCallback(), 350)
     }}>
-      <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>map</Text>
+      <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "map" ? '#527AFF' : "black"}}>map</Text>
     </TouchableOpacity>
 
   <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress = {() => {
-    this.props.hideMenuCallback(); this.navigate("People");
-  }}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>people</Text>
+      this.navigate("People"); setTimeout(() => this.props.hideMenuCallback(), 350);
+    }}>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "people" ? '#527AFF' : "black"}}>people</Text>
   </TouchableOpacity>
 
   <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>chat</Text>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "chat" ? '#527AFF' : "black"}}>chat</Text>
   </TouchableOpacity>
 
-  <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}}>
-    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: "black"}}>settings</Text>
+  <TouchableOpacity style = {{marginTop: 10, marginLeft: 40}} onPress={this.logout}>
+    <Text style = {{fontFamily: "sofia pro regular", fontSize: 40, color: this.props.currentScreen === "settings" ? '#527AFF' : "black"}}>logout</Text>
   </TouchableOpacity>
 
     </View>

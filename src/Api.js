@@ -22,8 +22,8 @@ exports.login = function(email, password) {
   })
 }
 
-exports.logout = function(email, password) {
-  return fetch(BASE_URL+"/login", {
+exports.logout = function() {
+  return fetch(BASE_URL+"/logout", {
     method: "POST",
     headers: {
       Accept: 'application/json',
@@ -31,8 +31,6 @@ exports.logout = function(email, password) {
       
     },
     body: JSON.stringify({
-      email: email,
-      password: password
     }),
     credentials: "include",
 

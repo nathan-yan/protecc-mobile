@@ -43,6 +43,10 @@ export default class MainDashboard extends Component {
     this.headcount={};
 
     this.mapRef; 
+    if (this.props.screenProps.partyData.headcount.near.length > 0 || this.props.screenProps.partyData.headcount.far.length > 0 || this.props.screenProps.partyData.headcount.unresponsive.length > 0){
+      this.state.showingMenu = false
+      this.state.headcount = true
+    }
 
     exports.headcountResponse = (type, response) => {
       let headcountStatus = this.state.headcountStatus;
@@ -305,7 +309,7 @@ export default class MainDashboard extends Component {
            </Mapbox.MapView>
         { this.state.showingMenu && 
          
-          <Menu hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
+          <Menu currentScreen="map" hideMenuCallback = {this.hideMenu} navigator = {this.props.navigation} initiateHeadCount = {this.initiateHeadCount}/>
         }
 
         { this.state.headcount && this.isAdmin && this.state.initiator &&
