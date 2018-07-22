@@ -29,6 +29,7 @@ socket.on('locationUpdate', (data) => {
 })
 
 socket.on("notifyHeadcount", (data) => {
+  console.log('NOTIFY HEADCOUNT DATA vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv')
   console.log(data);
   initiateHeadCount_();
   setNear(data);

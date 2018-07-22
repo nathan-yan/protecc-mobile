@@ -286,12 +286,17 @@ export default class MainDashboard extends Component {
     var nearIds = this.state.headcountStatus.near.slice();
 
     console.log('MY OWN ID ' + this.props.screenProps.userData._id);
-    return nearIds.includes(this.props.screenProps.userData._id);
+
+    console.log(nearIds);
+    var notNear = !nearIds.includes(this.props.screenProps.userData._id);
+    console.log(notNear);
+    return notNear;
   }
-  
+
   render() {
-    let partyData = this.props.screenProps.partyData;
-    console.log(this.state.initiator);
+    console.log(this.notNear());
+    console.log(!this.state.initiator && this.state.headcount && this.notNear());
+
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
