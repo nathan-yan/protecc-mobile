@@ -124,7 +124,7 @@ exports.updateLocation = function(lat, lon) {
 
 exports.initiateHeadcount = function(){
   console.log("INITIATING HEADCOUNT");
-  return fetch(BASE_URL + "api/party/headcount", {
+  return fetch(BASE_URL + "party/headcount", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -134,7 +134,7 @@ exports.initiateHeadcount = function(){
 }
 
 exports.respondHeadcount = function() {
-  return fetch(BASE_URL + "api/party/headcount/respond", {
+  return fetch(BASE_URL + "party/headcount/respond", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -144,7 +144,7 @@ exports.respondHeadcount = function() {
 }
 
 exports.stopHeadcount = function() {
-  return fetch(BASE_URL + "api/party/headcount/stop", {
+  return fetch(BASE_URL + "party/headcount/stop", {
     method: "POST",
     headers: {
       Accept: "application/json",
