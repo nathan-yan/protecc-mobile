@@ -78,7 +78,7 @@ export default class MainDashboard extends Component {
       } 
     }
 
-    exports.initiateHeadCount = () => {
+    exports.initiateHeadCount_ = () => {
       var initiator = false;
       if (this.state.headcount){
         // You're the initiator
@@ -93,7 +93,7 @@ export default class MainDashboard extends Component {
 
   }
 
-  initiateHeadCount_ = () => {
+  initiateHeadCount = () => {
     var initiator = false;
     if (this.state.headcount){
       // You're the initiator
