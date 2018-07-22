@@ -8,29 +8,6 @@ import { setPartyStateDirectly, getPartyState, getUserState } from '../../App'
 
 import Menu from './Menu'
 
-const guardians = [
-  {
-    name: 'g1',
-    profilePicture: 'https://dsys32.nyc3.digitaloceanspaces.com/protecc/1e74f277415dbdc8b1ab9485c238f106',
-  },
-  {
-    name: 'g2',
-    profilePicture: 'https://dsys32.nyc3.digitaloceanspaces.com/protecc/1e74f277415dbdc8b1ab9485c238f106',
-  }
-]
-
-const members = [
-  {
-    name: 'm1',
-    profilePicture: 'https://dsys32.nyc3.digitaloceanspaces.com/protecc/default.png',
-  },
-  {
-    name: 'm2',
-    profilePicture: 'https://dsys32.nyc3.digitaloceanspaces.com/protecc/default.png',
-  }
-]
-
-
 export default class PeopleScreen extends Component {
   constructor(props) {
     super(props)
@@ -171,7 +148,7 @@ class PopUp extends Component {
               {this.props.popUpMember.name}
             </Text>
             <View style={{backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', width: widthPercentageToDP(25), height: widthPercentageToDP(25), borderRadius: widthPercentageToDP(25)/2, zIndex: 1}}>
-              <Image source={{uri: this.props.popUpMember.profilePicture}} style={{width: widthPercentageToDP(22), height: widthPercentageToDP(22), borderRadius: widthPercentageToDP(22)/2}}/>
+              <Image source={{uri: this.props.popUpMember.profilePicture === '' ? 'https://dsys32.nyc3.digitaloceanspaces.com/protecc/default.png' : this.props.popUpMember.profilePicture}} style={{width: widthPercentageToDP(22), height: widthPercentageToDP(22), borderRadius: widthPercentageToDP(22)/2}}/>
             </View>
             <Mapbox.MapView
               styleURL={Mapbox.StyleURL.Light}

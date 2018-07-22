@@ -30,6 +30,7 @@ export default class SignUp extends Component {
         showIndicator: true
       })
 
+      console.log([this.state.name, this.state.email, this.state.phone, this.state.password, this.state.avatarSource.uri].reduce((a, b) => a + ' ' + b));
       Api.createUser(this.state.name, this.state.email, this.state.phone, this.state.password, this.state.avatarSource).then((res) => {
         console.log(res)
         if (res.status === 200) {
