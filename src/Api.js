@@ -1,3 +1,7 @@
+import cookieManager from "react-native-cookies";
+import storage from "react-native";
+
+
 const BASE_URL = "https://api.protecc.us/api"
 
 exports.login = function(email, password) {
@@ -6,11 +10,14 @@ exports.login = function(email, password) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      
     },
     body: JSON.stringify({
       email: email,
       password: password
-    })
+    }),
+    credentials: "include",
+
   })
 }
 
@@ -30,7 +37,8 @@ exports.joinParty = function(roomCode) {
     },
     body: JSON.stringify({
       roomCode: roomCode
-    })
+    }),
+    credentials: "include",
   })
 }
 
@@ -39,7 +47,8 @@ exports.createParty = function() {
     method: "POST",
     headers: {
       Accept: "application/json"
-    }
+    },
+    credentials: "include",
   })
 }
 
@@ -53,6 +62,7 @@ exports.updateLocation = function(lat, lon) {
     body: JSON.stringify({
       lat: lat,
       lon: lon
-    })
+    }),
+    credentials: "include",
   })
 }
