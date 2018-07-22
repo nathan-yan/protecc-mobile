@@ -38,7 +38,7 @@ const RootStack = createStackNavigator({
   Main: MainScreen
 },
 {
-  initialRouteName: 'Splash',
+  initialRouteName: 'SignUp',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,

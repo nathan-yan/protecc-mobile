@@ -143,6 +143,7 @@ android {
 dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-cookies')
+    compile project(':react-native-image-picker')
     compile project(':@mapbox/react-native-mapbox-gl')
     compile project(':react-native-camera')
     compile fileTree(dir: "libs", include: ["*.jar"])
