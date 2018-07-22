@@ -4,6 +4,7 @@ import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 import Api from '../Api'
 import ImagePicker from 'react-native-image-picker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const duration = 200
 
@@ -18,7 +19,8 @@ export default class SignUp extends Component {
       password: '',
       avatarSource: '',
       showIndicator: false,
-      keyboardHeight: new Animated.Value(0)
+      keyboardHeight: new Animated.Value(0),
+      password_mask: true,
     }
   }
 
@@ -28,8 +30,11 @@ export default class SignUp extends Component {
         showIndicator: true
       })
 
-      Api.createUser(this.state.name, this.state.email, this.state.password, this.state.avatarSource).then((res) => {
-        
+      Api.createUser(this.state.name, this.state.email, this.state.phone, this.state.password, this.state.avatarSource).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.props.navigation.navigate('JoinParty')
+        }
       })
     }
   }
@@ -133,16 +138,22 @@ export default class SignUp extends Component {
               autoCapitalize='none'
               editable={!this.state.showIndicator}
             />
-            <TextInput style={{paddingLeft: 0, fontSize: 30, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
-              underlineColorAndroid={'transparent'}
-              placeholder="password"
-              placeholderTextColor="#DDDDDD"
-              value={this.state.password}
-              onChangeText={(password) => this.setState({password})}
-              secureTextEntry={true}
-              autoCapitalize='none'
-              editable={!this.state.showIndicator}
-            />
+            <View style={{flexDirection: 'row', alignItems: 'center', }}>
+              <TextInput style={{paddingLeft: 0, fontSize: 30, color: "#DDDDDD", width: widthPercentageToDP(70), fontFamily: 'sofia pro regular'}}
+                underlineColorAndroid={'transparent'}
+                placeholder="password"
+                placeholderTextColor="#DDDDDD"
+                value={this.state.password}
+                onChangeText={(password) => this.setState({password})}
+                secureTextEntry={this.state.password_mask}
+                autoCapitalize='none'
+                editable={!this.state.showIndicator}
+              />
+              <MaterialCommunityIcons name={this.state.password_mask ? "eye" : "eye-off"} 
+                onPress={() => this.setState({ password_mask: !this.state.password_mask })}
+                style={{fontSize: 30, color: '#FFFFFF'}}
+              />
+            </View>
             <Button text="get started" style={{width: widthPercentageToDP(40)}} onPress={this.onPressGetStarted} showIndicator={this.state.showIndicator}/>
           </View>
         </View>

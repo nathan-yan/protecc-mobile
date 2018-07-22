@@ -3,6 +3,7 @@ import storage from "react-native";
 
 
 const BASE_URL = "https://api.protecc.us/api"
+//const BASE_URL = "http://192.168.0.37:3000/api"
 
 exports.login = function(email, password) {
   return fetch(BASE_URL+"/login", {
@@ -21,7 +22,7 @@ exports.login = function(email, password) {
   })
 }
 
-exports.createUser = function(name, email, password, avatar) {
+exports.createUser = function(name, email, phone, password, avatar) {
   return fetch(BASE_URL+"/user/create", {
     method: "POST",
     headers: {
@@ -33,7 +34,7 @@ exports.createUser = function(name, email, password, avatar) {
       email: email, 
       phone: phone,
       password: password,
-      profilePicture: avatar
+      profilePicture: avatar.uri
     })
   })
 }

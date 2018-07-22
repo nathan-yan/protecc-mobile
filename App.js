@@ -34,11 +34,10 @@ const RootStack = createStackNavigator({
   JoinParty: JoinPartyScreen,
   JoinPartyScanCode: ScanCodeScreen,
   SignUp: SignUpScreen,
-
   Main: MainScreen
 },
 {
-  initialRouteName: 'SignUp',
+  initialRouteName: 'Login',
   headerMode: 'none',
     navigationOptions: {
         headerVisible: false,
