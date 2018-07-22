@@ -30,7 +30,7 @@ socket.on('locationUpdate', (data) => {
 
 socket.on("notifyHeadcount", (data) => {
   console.log(data);
-  initiateHeadcount_();
+  initiateHeadCount_();
   setNear(data);
 })
 
