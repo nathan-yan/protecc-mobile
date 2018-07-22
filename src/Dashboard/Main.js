@@ -12,6 +12,8 @@ import Mapbox from '@mapbox/react-native-mapbox-gl';
 import Api from '../Api'
 import Menu from './Menu'
 
+Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
+
 export default class MainDashboard extends Component {
   constructor(props){
     super(props)
@@ -30,19 +32,17 @@ export default class MainDashboard extends Component {
 
   updateLocation = async () => {
     navigator.geolocation.getCurrentPosition(async (res) => {
-      let longitude = res.coords.longitude;
-      let latitude = res.coords.latitude;
+      let longitude = res.coords.longitude + Math.random() * 5;
+      let latitude = res.coords.latitude + Math.random() * 5;
 
       let res_ = await Api.updateLocation(latitude, longitude);
-
-      Alert.alert("UPDATED LOCATION!");
 
       this.setState({
         coordinates: {
           longitude: longitude,
           latitude: latitude
         }
-      })
+      });
     });
   }
 
@@ -54,7 +54,31 @@ export default class MainDashboard extends Component {
     });
   }
   
+  renderAnnotations = () => {
+    let partyData = this.props.screenProps.partyData;
+    let annotations = partyData.members.map((member, i) => {
+      // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
+
+      console.log(member.location, member.name)
+      if (!member.location) return;
+      return <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = {"member-" + i} coordinate = {[member.location.lon, member.location.lat]} key = {"member-" + i}>
+      <View style = {{justifyContent: "center"}}>
+        <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>
+          <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>{member.name}
+          </Text>
+        </View>
+        
+        <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#f05056"}} />
+      </View>
+      </Mapbox.PointAnnotation>
+    })
+
+    return annotations
+
+  }
+
   async componentDidMount() {
+    setInterval(this.updateLocation, 5000);
     const { navigate } = this.props.navigation;
   
     this.updateLocation();
@@ -108,26 +132,9 @@ export default class MainDashboard extends Component {
   }
 
   render() {
-    Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
     console.log(this.props.screenProps);
     let partyData = this.props.screenProps.partyData;
-    let annotations = partyData.members.map((member, i) => {
-      // TODO: add this.state.coordinates.longitude, this.state.coordinates.latitude for your own location
-
-      console.log(member.location, member.name)
-      if (!member.location) return;
-      return <Mapbox.PointAnnotation anchor = {{x:0.0, y:1}} id = {"member-" + i} coordinate = {[member.location.lon, member.location.lat]} key = {"member-" + i}>
-      <View style = {{justifyContent: "center"}}>
-        <View style = {{borderRadius: 5, padding: 10, paddingTop: 1, paddingBottom: 5, marginBottom: 2, backgroundColor: "#f05056"}}>
-          <Text style = {{fontFamily: "sofia pro regular", color: "white", fontSize: 20}}>{member.name}
-          </Text>
-        </View>
-        
-        <View style = {{borderRadius: 50, width: 10, height: 10, backgroundColor: "#f05056"}} />
-      </View>
-      </Mapbox.PointAnnotation>
-    })
-
+    
   
     return (
       
@@ -144,10 +151,10 @@ export default class MainDashboard extends Component {
             ref = {(map) => this.mapRef = map}
             styleURL={Mapbox.StyleURL.Light}
             zoomLevel={15}
-            centerCoordinate={[this.state.coordinates.longitude, this.state.coordinates.latitude]}
+            centerCoordinate={[0, 0]}
             style={{width: "100%", height: "100%"}}
             >
-              {annotations}            
+              {this.renderAnnotations()}            
            </Mapbox.MapView>
         { this.state.showingMenu && 
          

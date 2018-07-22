@@ -27,7 +27,7 @@ export default class App extends Component {
       initialized: false
     }
 
-    exports.setPartyStateDirectly = async (data) => {
+    exports.setPartyStateDirectly = (data) => {
       this.setState(data);
     }
 
