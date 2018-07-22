@@ -112,7 +112,6 @@ export default class MainDashboard extends Component {
   }
 
   render() {
-<<<<<<< HEAD
     Mapbox.setAccessToken("pk.eyJ1IjoibmF0aGFuY3lhbiIsImEiOiJjamp3M3JsZnkwbGN5M3dwYXdxajh1Z3ZkIn0.sgDMA2v-LkmMEwJEUQtRvQ");
     console.log(this.props.screenProps);
     let partyData = this.props.screenProps;
@@ -133,8 +132,6 @@ export default class MainDashboard extends Component {
     })
 
   
-=======
->>>>>>> 12f73d5e0ea9bd44ed81ad9029cfef606fb636bd
     return (
       
       <View style={{width: "100%", height: "100%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: '#527AFF'}}>
