@@ -17,12 +17,12 @@ socket.on('locationUpdate', (data) => {
   let members = partyData.members;
 
   for (var i = 0; i < members.length; i++){
-    if (members[i].id == data.id){
+    if (members[i]._id.toString() == data.id.toString()){
       // Update that member
       partyData.members[i].location = data.location;
       break;
     }
   }
 
-  setPartyStateDirectly(partyData);
+  setPartyStateDirectly({partyData:partyData});
 })
