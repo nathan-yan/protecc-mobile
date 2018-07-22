@@ -4,7 +4,7 @@ import { widthPercentageToDP, heightPercentageToDP } from '../scaling'
 import { Button } from '../Component'
 import Api from '../Api'
 import ImagePicker from 'react-native-image-picker';
-import RNFS from 'react-native-fs'
+import base64Img from 'base64-img'
 
 const duration = 200
 
@@ -45,8 +45,7 @@ export default class SignUp extends Component {
   }
 
   getDefaultAvatarPicture = async () => {
-    const data = await RNFS.readFile('../../assets/images/happychicken.png', 'base64')
-    console.log()
+    var data = base64Img.base64Sync('../../assets/images/happychicken.png');
     return data
   }
 
